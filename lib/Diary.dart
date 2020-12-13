@@ -8,6 +8,10 @@ class Dairy_Section extends StatefulWidget {
 }
 
 class _Dairy_SectionState extends State<Dairy_Section> {
+  static const TextStyle generalStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle tableStyle =
+  TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,30 +24,42 @@ class _Dairy_SectionState extends State<Dairy_Section> {
           children:[
             TableRow(
               children: [
-                Text('Goal Energy'),
-                Text('Food Energy'),
-                Text('Difference'),
+                Text('Goal Energy',
+                  style: tableStyle,),
+                Text('Food Energy',
+                  style: tableStyle,),
+                Text('Difference',
+                  style: tableStyle,),
               ],
             ),
             TableRow(
                 children: [
-                  Text('2000'),
-                  Text('2500'),
-                  Text('500'),
+                  Text('2000',
+                    style: tableStyle,),
+                  Text('2500',
+                    style: tableStyle,),
+                  Text('500',
+                    style: tableStyle,),
                 ],
             ),
             TableRow(
               children: [
-                Text('Protein'),
-                Text('Carbohydrate'),
-                Text('Fat'),
+                Text('Protein',
+                  style: tableStyle,),
+                Text('Carbohydrate',
+                  style: tableStyle,),
+                Text('Fat',
+                  style: tableStyle,),
               ],
             ),
             TableRow(
               children: [
-                Text('x'),
-                Text('x'),
-                Text('x'),
+                Text('x',
+                  style: tableStyle,),
+                Text('x',
+                  style: tableStyle,),
+                Text('x',
+                  style: tableStyle,),
               ],
             ),
           ],
@@ -54,9 +70,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             children: <Widget>[
               Text(
                 'Breakfast',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: generalStyle,
               ),
               SizedBox(height: 30),
               RaisedButton(
@@ -74,9 +88,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             children: <Widget>[
               Text(
                 'Lunch',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: generalStyle,
               ),
               SizedBox(height: 30),
               RaisedButton(
@@ -94,9 +106,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             children: <Widget>[
               Text(
                 'Dinner',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: generalStyle,
               ),
               SizedBox(height: 30),
               RaisedButton(
@@ -114,9 +124,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             children: <Widget>[
               Text(
                 'Snacks',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: generalStyle,
               ),
               SizedBox(height: 30),
               RaisedButton(

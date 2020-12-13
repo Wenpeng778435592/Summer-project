@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   List<Widget> _options = <Widget>[
     Dairy_Section(),
-    Text('2'),
+    Weight_section(),
     Text('3'),
     Text('4'),
     Text('5'),
