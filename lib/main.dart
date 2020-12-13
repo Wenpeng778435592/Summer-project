@@ -5,7 +5,13 @@ import 'package:my_diet_diary/Weight.dart';
 import 'package:my_diet_diary/QuickAdd.dart';
 import 'package:my_diet_diary/Report.dart';
 import 'package:my_diet_diary/More.dart';
-
+// Text(
+// 'More',
+// style: TextStyle(
+// fontSize: 30,
+// fontWeight: FontWeight.bold
+// ),
+// ),
 
 void main() {
   runApp(MaterialApp(
@@ -25,9 +31,9 @@ class _HomeState extends State<Home> {
   List<Widget> _options = <Widget>[
     Dairy_Section(),
     Weight_section(),
-    Text('3'),
-    Text('4'),
-    Text('5'),
+    QuickAdd_Section(),
+    Report_Section(),
+    More_Section(),
   ];
 
 
@@ -35,11 +41,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Date'),
-        centerTitle: true,
-        backgroundColor: Colors.amber[800],
-      ),
+
 
       body: _options.elementAt(_currentIndex),
 
@@ -54,7 +56,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         iconSize: 30,
         items: [
           BottomNavigationBarItem(

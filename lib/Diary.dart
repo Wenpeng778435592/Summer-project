@@ -15,8 +15,12 @@ class _Dairy_SectionState extends State<Dairy_Section> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
+      appBar: AppBar(
+        title: Text('Date',
+        style: generalStyle,),
+        centerTitle: true,
+        backgroundColor: Colors.amber[800],
+      ),
     body: Column(
       children: <Widget>[
         Table(
@@ -72,12 +76,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 'Breakfast',
                 style: generalStyle,
               ),
-              SizedBox(height: 30),
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
-
                 },
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
             ]
@@ -90,12 +93,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 'Lunch',
                 style: generalStyle,
               ),
-              SizedBox(height: 30),
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
-
                 },
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
             ]
@@ -108,12 +110,10 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 'Dinner',
                 style: generalStyle,
               ),
-              SizedBox(height: 30),
               RaisedButton(
                 color: Colors.amber,
-                onPressed: (){
-
-                },
+                onPressed: (){},
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
             ]
@@ -126,12 +126,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 'Snacks',
                 style: generalStyle,
               ),
-              SizedBox(height: 30),
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
-
                 },
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
             ]
