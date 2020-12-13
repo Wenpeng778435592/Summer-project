@@ -48,7 +48,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             ),
           ],
         ),
-        SizedBox(height: 60),
+        SizedBox(height: 70),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
