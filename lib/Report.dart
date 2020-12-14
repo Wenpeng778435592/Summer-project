@@ -14,10 +14,42 @@ class _Report_SectionState extends State<Report_Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Report',
+        title: Text('Energy Chart',
           style: generalStyle,),
         centerTitle: true,
         backgroundColor: Colors.amber[800],
+      ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              IconButton(
+                onPressed: (){},
+                icon:Icon(Icons.arrow_back),
+                iconSize: 55,
+                color: Colors.amber,
+              ),
+              RaisedButton(
+                onPressed: (){},
+                child:Text(
+                  'This Week',
+                  style:generalStyle,
+                ),
+                color: Colors.amber,
+                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+              ),
+
+              IconButton(
+                onPressed: (){},
+                icon:Icon(Icons.arrow_forward),
+                iconSize: 55,
+                color: Colors.amber,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

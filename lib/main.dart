@@ -72,8 +72,8 @@ class _HomeState extends State<Home> {
               label:'QuickAdd',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.report),
-              label:'Report',
+              icon: Icon(Icons.fastfood),
+              label:'Energy',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.help),
