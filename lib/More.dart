@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:my_diet_diary/More-Reminders.Dart';
 
 
 class More_Section extends StatefulWidget {
@@ -147,6 +148,7 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
+                  ReminderSection();
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
