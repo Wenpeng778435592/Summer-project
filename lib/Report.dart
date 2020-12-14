@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Report_Section extends StatefulWidget {
   @override

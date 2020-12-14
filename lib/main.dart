@@ -5,6 +5,7 @@ import 'package:my_diet_diary/Weight.dart';
 import 'package:my_diet_diary/QuickAdd.dart';
 import 'package:my_diet_diary/Report.dart';
 import 'package:my_diet_diary/More.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // Text(
 // 'More',
 // style: TextStyle(
@@ -57,14 +58,14 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.grey[300],
-        iconSize: 30,
+        iconSize: 35,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.article),
+              icon: FaIcon(FontAwesomeIcons.book),
               label: 'Diary',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.line_weight),
+              icon: FaIcon(FontAwesomeIcons.weight),
               label:'Weight',
           ),
           BottomNavigationBarItem(
