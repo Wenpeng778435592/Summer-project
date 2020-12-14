@@ -23,7 +23,8 @@ class _More_SectionState extends State<More_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-          body: Column(
+          body: Container(
+            child:Column(
       children: <Widget>[
 
         Row(
@@ -158,6 +159,7 @@ class _More_SectionState extends State<More_Section> {
 
       ],
     ),
+          ),
     );
   }
 }

@@ -21,7 +21,8 @@ class _Dairy_SectionState extends State<Dairy_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-    body: Column(
+    body: Container(
+    child:Column(
       children: <Widget>[
         Table(
           border: TableBorder.all(color: Colors.black),
@@ -137,6 +138,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
         ),
 
       ],
+    ),
     ),
 
     );
