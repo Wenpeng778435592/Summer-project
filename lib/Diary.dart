@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_diary/Breakfast.dart';
+import 'package:my_diet_diary/Dinner.dart';
+import 'package:my_diet_diary/Lunch.dart';
+import 'package:my_diet_diary/Snack.dart';
 
 class Dairy_Section extends StatefulWidget {
   @override
@@ -23,6 +27,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
       ),
     body: Container(
     child:Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Table(
           border: TableBorder.all(color: Colors.black),
@@ -80,6 +85,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
@@ -97,6 +105,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Lunch_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
@@ -113,7 +124,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ),
               RaisedButton(
                 color: Colors.amber,
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dinner_Section()),
+                  );
+                },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
@@ -130,6 +145,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Snack_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
