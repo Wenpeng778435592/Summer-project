@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_diary/Breakfast.dart';
-import 'package:my_diet_diary/Dinner.dart';
-import 'package:my_diet_diary/Lunch.dart';
-import 'package:my_diet_diary/Snack.dart';
+import 'package:my_diet_diary/Diary-Breakfast.dart';
+import 'package:my_diet_diary/Diary-Dinner.dart';
+import 'package:my_diet_diary/Diary-Lunch.dart';
+import 'package:my_diet_diary/Diary-Snack.dart';
 
 class Dairy_Section extends StatefulWidget {
   @override
