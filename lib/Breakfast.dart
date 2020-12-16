@@ -18,14 +18,26 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(Icons.arrow_back_ios_outlined),
+            IconButton(
+              icon:Icon(Icons.arrow_back_ios_outlined),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            ),
             Text('Breakfast'),
-            FaIcon(FontAwesomeIcons.barcode),
+            IconButton(
+              icon:FaIcon(FontAwesomeIcons.barcode),
+              onPressed: (){},
+            ),
+
+
           ],
         ),
+        backgroundColor:Colors.amber[800],
       ),
       body: Column(
         children: <Widget>[
