@@ -70,6 +70,11 @@ class _More_SectionState extends State<More_Section> {
               ),
             ]
         ),
+        Divider(
+          height: 10,
+          thickness: 5,
+          color: Colors.blue,
+        ),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -141,6 +146,11 @@ class _More_SectionState extends State<More_Section> {
                 iconSize: 55,
               ),
             ]
+        ),
+        Divider(
+          height: 10,
+          thickness: 5,
+          color: Colors.blue,
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

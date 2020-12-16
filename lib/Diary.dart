@@ -20,8 +20,16 @@ class _Dairy_SectionState extends State<Dairy_Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Date',
-        style: generalStyle,),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget>[
+            Text('Today',
+            style: generalStyle,
+            ),
+            Icon(Icons.play_arrow)
+          ],
+          ),
+
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
