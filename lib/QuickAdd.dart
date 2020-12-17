@@ -48,7 +48,7 @@ class _QuickAdd_SectionState extends State<QuickAdd_Section> {
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 onPressed: (){
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                    MaterialPageRoute(builder: (context) => Snack_Section()),
                   );
                 },
               ),
@@ -64,7 +64,7 @@ class _QuickAdd_SectionState extends State<QuickAdd_Section> {
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 onPressed: (){
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                    MaterialPageRoute(builder: (context) => Lunch_Section()),
                   );
                 },
               ),
@@ -74,7 +74,7 @@ class _QuickAdd_SectionState extends State<QuickAdd_Section> {
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 onPressed: (){
                   Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                    MaterialPageRoute(builder: (context) => Dinner_Section()),
                   );
                 },
               ),
