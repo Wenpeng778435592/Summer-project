@@ -38,10 +38,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-    body: Container(
-    child:Column(
+    body: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        // Expanded(child: new Container(),),
         Table(
           border: TableBorder.all(color: Colors.black),
           children:[
@@ -56,14 +57,14 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ],
             ),
             TableRow(
-                children: [
-                  Text('2000',
-                    style: tableStyle,),
-                  Text('2500',
-                    style: tableStyle,),
-                  Text('500',
-                    style: tableStyle,),
-                ],
+              children: [
+                Text('2000',
+                  style: tableStyle,),
+                Text('2500',
+                  style: tableStyle,),
+                Text('500',
+                  style: tableStyle,),
+              ],
             ),
             TableRow(
               children: [
@@ -87,9 +88,8 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             ),
           ],
         ),
-        SizedBox(height: 70),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 'Breakfast',
@@ -99,7 +99,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 color: Colors.amber,
                 onPressed: (){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
                   );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
@@ -107,7 +107,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ),
             ]
         ),
-        SizedBox(height: 70),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -127,7 +126,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ),
             ]
         ),
-        SizedBox(height: 70),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -147,7 +145,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ),
             ]
         ),
-        SizedBox(height: 70),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -169,7 +166,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
         ),
 
       ],
-    ),
     ),
 
     );
