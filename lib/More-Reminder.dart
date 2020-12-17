@@ -16,6 +16,7 @@ class _Reminder_SectionState extends State<Reminder_Section> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined),
@@ -25,6 +26,12 @@ class _Reminder_SectionState extends State<Reminder_Section> {
             ),
             Text('Reminder',
               style: generalStyle,),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: (){
+
+              },
+            ),
           ],
         ),
         backgroundColor: Colors.amber[800],

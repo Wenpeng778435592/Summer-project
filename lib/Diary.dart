@@ -26,7 +26,12 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             Text('Today',
             style: generalStyle,
             ),
-            Icon(Icons.play_arrow)
+            IconButton(
+              onPressed: (){
+
+              },
+              icon:Icon(Icons.play_arrow),
+            ),
           ],
           ),
 

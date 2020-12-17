@@ -39,27 +39,45 @@ class _Snack_SectionState extends State<Snack_Section> {
       ),
       body: Column(
         children: <Widget>[
-          RaisedButton(
-            onPressed: (){},
-            child:Text('Food Recent',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('Food Recent',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('My Food Recipes',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
           ),
-          RaisedButton(
-            onPressed: (){},
-            child:Text('My Food Recipes',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('Find a Food',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
           ),
-          RaisedButton(
-            onPressed: (){},
-            child:Text('Find a Food',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
-          ),
+
+
         ],
       ),
     );;
