@@ -149,25 +149,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'For Test Purpose',
-                style: generalStyle,
-              ),
-              RaisedButton(
-                color: Colors.amber,
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Dinner_Section()),
-                  );
-                },
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                child:Icon(Icons.add),
-              ),
-            ]
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
                 'Snacks',
                 style: generalStyle,
               ),
