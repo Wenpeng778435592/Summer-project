@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import 'dart:async';
 import 'package:my_diet_diary/Diary.dart';
 import 'package:my_diet_diary/Weight.dart';
@@ -28,6 +29,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  DatabaseHelper dbHelper = DatabaseHelper();
   int _currentIndex = 0;
   List<Widget> _options = <Widget>[
     Dairy_Section(),
