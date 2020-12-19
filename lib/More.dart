@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/More-About.dart';
+import 'package:my_diet_diary/More-Notifications.dart';
+import 'package:my_diet_diary/More-Profile.dart';
+import 'package:my_diet_diary/More-Reciples.dart';
 import 'dart:async';
-import 'package:my_diet_diary/More-Reminders.dart';
+import 'package:my_diet_diary/More-Reminder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_diary/More-Settings.dart';
+import 'package:my_diet_diary/More-MyFoods.dart';
+import 'package:my_diet_diary/More-Help.Dart';
 
 class More_Section extends StatefulWidget {
 
@@ -23,7 +30,8 @@ class _More_SectionState extends State<More_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-          body: Column(
+          body: Container(
+            child:Column(
       children: <Widget>[
 
         Row(
@@ -36,6 +44,8 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Reciple_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
@@ -52,11 +62,18 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyFood_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
               ),
             ]
+        ),
+        Divider(
+          height: 10,
+          thickness: 5,
+          color: Colors.blue,
         ),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,6 +85,8 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Profile_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
@@ -84,38 +103,8 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
-                },
-                icon:Icon(Icons.keyboard_arrow_right_outlined),
-                iconSize: 55,
-              ),
-            ]
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'Help',
-                style: generalStyle,
-              ),
-              IconButton(
-                color: Colors.amber,
-                onPressed: (){
-                },
-                icon:Icon(Icons.keyboard_arrow_right_outlined),
-                iconSize: 55,
-              ),
-            ]
-        ),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                'About',
-                style: generalStyle,
-              ),
-              IconButton(
-                color: Colors.amber,
-                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Setting_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
@@ -132,6 +121,8 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Notification_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
@@ -148,7 +139,49 @@ class _More_SectionState extends State<More_Section> {
               IconButton(
                 color: Colors.amber,
                 onPressed: (){
-                  ReminderSection();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Reminder_Section()),
+                  );
+                },
+                icon:Icon(Icons.keyboard_arrow_right_outlined),
+                iconSize: 55,
+              ),
+            ]
+        ),
+        Divider(
+          height: 10,
+          thickness: 5,
+          color: Colors.blue,
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Help',
+                style: generalStyle,
+              ),
+              IconButton(
+                color: Colors.amber,
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Helps_Section()),
+                  );
+                },
+                icon:Icon(Icons.keyboard_arrow_right_outlined),
+                iconSize: 55,
+              ),
+            ]
+        ),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'About',
+                style: generalStyle,
+              ),
+              IconButton(
+                color: Colors.amber,
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => About_Section()),
+                  );
                 },
                 icon:Icon(Icons.keyboard_arrow_right_outlined),
                 iconSize: 55,
@@ -158,6 +191,7 @@ class _More_SectionState extends State<More_Section> {
 
       ],
     ),
+          ),
     );
   }
 }

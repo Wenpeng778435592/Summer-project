@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import "package:my_diet_diary/qr_view/scan_view.dart";
+import "package:my_diet_diary/qr_view/page_search.dart";
 
 class Breakfast_Section extends StatefulWidget {
   @override
@@ -18,14 +21,31 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(Icons.arrow_back_ios_outlined),
+            IconButton(
+              icon:Icon(Icons.arrow_back_ios_outlined),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            ),
             Text('Breakfast'),
-            FaIcon(FontAwesomeIcons.barcode),
+            IconButton(
+              icon:FaIcon(FontAwesomeIcons.barcode),
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScanView()),
+                );
+              },
+            ),
+
           ],
         ),
+        backgroundColor:Colors.amber[800],
       ),
       body: Column(
         children: <Widget>[
@@ -45,9 +65,26 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
           ),
           RaisedButton(
             onPressed: (){},
-            child:Text('Find a Food',
+            child:Text('My Food Recipes',
               style: generalStyle,
             ),
+            color: Colors.amber,
+          ),
+          RaisedButton(
+            onPressed: (){
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
+              );
+            },
+            child:Row(
+
+    children: [
+      Text('Find a Food',
+        style: generalStyle,
+      ),
+    Icon(Icons.search)
+    ],
+    ),
             color: Colors.amber,
           ),
         ],

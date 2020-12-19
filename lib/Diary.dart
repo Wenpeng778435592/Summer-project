@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_diary/Diary-Breakfast.dart';
+import 'package:my_diet_diary/Diary-Dinner.dart';
+import 'package:my_diet_diary/Diary-Lunch.dart';
+import 'package:my_diet_diary/Diary-Snack.dart';
 
 class Dairy_Section extends StatefulWidget {
   @override
@@ -16,12 +20,22 @@ class _Dairy_SectionState extends State<Dairy_Section> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Date',
-        style: generalStyle,),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:<Widget>[
+            Text('Today',
+            style: generalStyle,
+            ),
+            Icon(Icons.play_arrow)
+          ],
+          ),
+
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-    body: Column(
+    body: Container(
+    child:Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Table(
           border: TableBorder.all(color: Colors.black),
@@ -79,6 +93,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
@@ -96,6 +113,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Lunch_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
@@ -112,7 +132,11 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               ),
               RaisedButton(
                 color: Colors.amber,
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dinner_Section()),
+                  );
+                },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
               ),
@@ -129,6 +153,9 @@ class _Dairy_SectionState extends State<Dairy_Section> {
               RaisedButton(
                 color: Colors.amber,
                 onPressed: (){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Snack_Section()),
+                  );
                 },
                 shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
                 child:Icon(Icons.add),
@@ -137,6 +164,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
         ),
 
       ],
+    ),
     ),
 
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +21,7 @@ class _Report_SectionState extends State<Report_Section> {
         backgroundColor: Colors.amber[800],
       ),
       body: Column(
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(height: 20,),
           Row(
@@ -49,6 +51,47 @@ class _Report_SectionState extends State<Report_Section> {
               ),
             ],
           ),
+          SizedBox(height: 20,),
+          Row(
+            children: <Widget>[
+              Text(
+                'Calories',
+                style:generalStyle,
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
+          Row(
+            children: <Widget>[
+              Text(
+                'x',
+                style:generalStyle,
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Daily Average: ',
+                style:generalStyle,
+              ),
+              Text(
+                'y',
+                style:generalStyle,
+              ),
+              Text(
+                'Goal: ',
+                style:generalStyle,
+              ),
+              Text(
+                'z',
+                style:generalStyle,
+              ),
+            ],
+          ),
+          SizedBox(height: 20,),
         ],
       ),
     );
