@@ -67,9 +67,19 @@ class _Lunch_SectionState extends State<Lunch_Section> {
             children: <Widget>[
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('Find a Food',
-                    style: generalStyle,
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
+                    );
+                  },
+                  child:Row(
+
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
                   ),
                   color: Colors.amber,
                 ),

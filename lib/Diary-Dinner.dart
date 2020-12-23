@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import "package:my_diet_diary/qr_view/scan_view.dart";
+import "package:my_diet_diary/qr_view/page_search.dart";
 
 class Dinner_Section extends StatefulWidget {
   @override
@@ -31,7 +34,13 @@ class _Dinner_SectionState extends State<Dinner_Section> {
             Text('Dinner'),
             IconButton(
               icon:FaIcon(FontAwesomeIcons.barcode),
-              onPressed: (){},
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScanView()),
+                );
+              },
             ),
           ],
         ),
@@ -67,9 +76,19 @@ class _Dinner_SectionState extends State<Dinner_Section> {
             children: <Widget>[
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('Find a Food',
-                    style: generalStyle,
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
+                    );
+                  },
+                  child:Row(
+
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
                   ),
                   color: Colors.amber,
                 ),
