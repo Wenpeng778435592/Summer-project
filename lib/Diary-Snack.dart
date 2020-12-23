@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import "package:my_diet_diary/qr_view/scan_view.dart";
+import "package:my_diet_diary/qr_view/page_search.dart";
 
 class Snack_Section extends StatefulWidget {
   @override
