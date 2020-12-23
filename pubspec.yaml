@@ -23,12 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    # scan bar code..
-    flutter_qr_reader: ^1.0.3
-    # bar code
-    ai_barcode: ^1.0.6
-    #permissions apply
-    permission_handler: ^5.0.0
+  # scan bar code..
+  flutter_qr_reader: ^1.0.3
+  # bar code
+  ai_barcode: ^1.0.6
+  #permissions apply
+  permission_handler: ^5.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
