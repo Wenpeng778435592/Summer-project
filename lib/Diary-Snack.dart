@@ -34,7 +34,13 @@ class _Snack_SectionState extends State<Snack_Section> {
             Text('Snacks'),
             IconButton(
               icon:FaIcon(FontAwesomeIcons.barcode),
-              onPressed: (){},
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScanView()),
+                );
+              },
             ),
           ],
         ),

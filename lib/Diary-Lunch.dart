@@ -34,7 +34,13 @@ class _Lunch_SectionState extends State<Lunch_Section> {
             Text('Lunch'),
             IconButton(
               icon:FaIcon(FontAwesomeIcons.barcode),
-              onPressed: (){},
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ScanView()),
+                );
+              },
             ),
           ],
         ),
