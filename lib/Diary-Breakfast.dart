@@ -43,50 +43,63 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               },
             ),
 
+
           ],
         ),
         backgroundColor:Colors.amber[800],
       ),
       body: Column(
         children: <Widget>[
-          RaisedButton(
-            onPressed: (){},
-            child:Text('Food Recent',
-            style: generalStyle,
-            ),
-            color: Colors.amber,
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('Food Recent',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('My Food Recipes',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
           ),
-          RaisedButton(
-            onPressed: (){},
-            child:Text('My Food Recipes',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
-          ),
-          RaisedButton(
-            onPressed: (){},
-            child:Text('My Food Recipes',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
-          ),
-          RaisedButton(
-            onPressed: (){
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
-              );
-            },
-            child:Row(
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
+                    );
+                  },
+                  child:Row(
 
-    children: [
-      Text('Find a Food',
-        style: generalStyle,
-      ),
-    Icon(Icons.search)
-    ],
-    ),
-            color: Colors.amber,
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
           ),
+
+
+
         ],
       ),
     );
