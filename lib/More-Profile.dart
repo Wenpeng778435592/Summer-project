@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_diary/User_input/User_input_2.dart';
+import 'package:my_diet_diary/User_input/ActivityLevel.dart';
 
 class Profile_Section extends StatefulWidget {
   @override
@@ -140,34 +140,37 @@ class _Profile_SectionState extends State<Profile_Section> {
         ),
         backgroundColor: Colors.amber[800],
       ),
-      body: Form(
-        key: formkey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              _buildAge(),
-              _buildHeight(),
-              _buildWeight(),
-              _buildGender(),
-              SizedBox(height: 100),
-              RaisedButton(
-                child: Text(
-                  'Next',
-                  style: generalStyle,
-                ),
-                onPressed: (){
-                  if(formkey.currentState.validate()){
-                    print('Nice you made it!');
-                  }
-              },
-              )
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Form(
+          key: formkey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                _buildAge(),
+                _buildHeight(),
+                _buildWeight(),
+                _buildGender(),
+                SizedBox(height: 100),
+                RaisedButton(
+                  child: Text(
+                    'Next',
+                    style: generalStyle,
+                  ),
+                  onPressed: (){
+                    if(formkey.currentState.validate()){
+                      print('Nice you made it!');
+                    }
+                },
+                )
 
-            ],
+              ],
 
+            ),
           ),
-        ),
-        ),
+          ),
+      ),
     );
   }
 }
