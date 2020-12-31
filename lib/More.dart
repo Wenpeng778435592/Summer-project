@@ -24,6 +24,7 @@ class _More_SectionState extends State<More_Section> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('More',
           style: generalStyle,),
