@@ -7,6 +7,7 @@ import 'package:my_diet_diary/QuickAdd.dart';
 import 'package:my_diet_diary/Report.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sqflite/sqflite.dart';
 // Text(
 // 'More',
 // style: TextStyle(
@@ -22,14 +23,13 @@ void main() {
 }
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  var dbHelper = DatabaseHelper();
 
-  DatabaseHelper dbHelper = DatabaseHelper();
   int _currentIndex = 0;
   List<Widget> _options = <Widget>[
     Dairy_Section(),
@@ -39,7 +39,11 @@ class _HomeState extends State<Home> {
     More_Section(),
   ];
 
-
+  @override
+  void initState() {
+    super.initState();
+    dbHelper.getFoodHistoryForDay(DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +97,11 @@ class _HomeState extends State<Home> {
 
       ),
     );
+  }
+
+  void _insert() async {
+    // row to insert
+    dbHelper.getAllFoodHistory();
   }
 }
 

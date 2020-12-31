@@ -11,12 +11,11 @@ class FoodEntry {
   String date;
   Meal meal;
 
-  FoodEntry(this.id, this.userID, this.carbs, this.protein, this.fat,
-      this.calories, this.name, this.meal);
+  FoodEntry(this.userID, this.carbs, this.protein, this.fat,
+      this.calories, this.name, this.meal, this.date);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'id': id,
       'userID': userID,
       'carbs': carbs,
       'protein': protein,
@@ -38,6 +37,10 @@ class FoodEntry {
     calories = map['calories'];
     name = map['name'];
     date = map['date'];
-    meal = map['meal'].value;
+    meal = Meal.values.firstWhere((e) => e.toString() == 'Meal.' + map['meal']);
+  }
+
+  String toString(){
+    return this.name + " " + this.date;
   }
 }
