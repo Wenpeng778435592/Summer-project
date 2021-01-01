@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
+import 'package:my_diet_diary/DataObjects/Meal.dart';
 import 'dart:async';
 import 'package:my_diet_diary/Diary.dart';
 import 'package:my_diet_diary/Weight.dart';
@@ -8,6 +9,8 @@ import 'package:my_diet_diary/Report.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'DataObjects/User.dart';
 // Text(
 // 'More',
 // style: TextStyle(
@@ -38,12 +41,6 @@ class _HomeState extends State<Home> {
     Report_Section(),
     More_Section(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    dbHelper.getFoodHistoryForDay(DateTime.now());
-  }
 
   @override
   Widget build(BuildContext context) {

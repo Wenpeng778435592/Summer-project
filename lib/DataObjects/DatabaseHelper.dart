@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'FoodEntry.dart';
 import 'Meal.dart';
+import 'User.dart';
 import 'WeightEntry.dart';
 
 class DatabaseHelper {
@@ -14,6 +15,7 @@ class DatabaseHelper {
 
   static final _foodHistoryTable = "FoodHistory";
   static final _weightHistoryTable = "WeightHistory";
+  static final _userInfoTable = "UserInformation";
 
   static final _id = "id";
 
@@ -27,6 +29,16 @@ class DatabaseHelper {
 
   static final _weightCol = "weight";
   static final _userIDCol = "userID";
+
+  static final _userNameCol = "name";
+  static final _userHeightCol = "height";
+  static final _userWeightCol = "weight";
+  static final _userAgeCol = "age";
+  static final _userGenderCol = "gender";
+  static final _userTargetWeightCol = "targetWeight";
+  static final _userGoal = "goal";
+  static final _userActivityLevel = "activityLevel";
+  static final _userCalorieGoal = "calorieGoal";
 
   static Database _database;
   static DatabaseHelper _databaseHelper; //SINGLETON DBHELPER
@@ -43,6 +55,7 @@ class DatabaseHelper {
 
   Future<Database> get database async {
     if (_database == null) {
+      print("initialise");
       _database = await initializeDatabase();
     }
     return _database;
@@ -59,6 +72,9 @@ class DatabaseHelper {
   }
 
   void _createDb(Database db, int newVersion) async {
+
+    print("new version");
+
     //Create food table
     await db
         .execute(
@@ -72,6 +88,14 @@ class DatabaseHelper {
         .execute(
         "CREATE TABLE $_weightHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_weightCol INTEGER,"
             + "$_userIDCol INTEGER, $_dateCol TEXT)"
+    );
+
+    //Create user information table
+    await db
+        .execute(
+        "CREATE TABLE $_userInfoTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_userAgeCol INTEGER,"
+            + "$_userHeightCol INTEGER, $_userWeightCol INTEGER, $_userTargetWeightCol INTEGER,$_userGenderCol TEXT,"
+            "$_userNameCol TEXT, $_userGoal TEXT, $_userActivityLevel INTEGER, $_userCalorieGoal INTEGER)"
     );
   }
 
@@ -93,14 +117,12 @@ class DatabaseHelper {
 
   Future<List<FoodEntry>> getFoodHistoryForDay(DateTime date) async {
     Database db = await this.database;
-    String day = date.day.toString();
-
-    print("day; " + day);
+    String day = date.toString().split(" ")[0];
 
     List<Map> queryResults = await db.query(
         _foodHistoryTable,
         where: '$_dateCol LIKE ?',
-        whereArgs: [day]
+        whereArgs: ['%$day%']
     );
 
     return _convertToFoodObjectList(queryResults);
@@ -109,12 +131,15 @@ class DatabaseHelper {
   //Returns entries matching the specified meal type for the day
   Future<List<FoodEntry>> getMealForDay(DateTime date, Meal mealType) async {
     Database db = await this.database;
-    String day = date.day.toString();
+    String day = date.toString().split(" ")[0];
+
+    String meal = mealType.value;
+    print("meal " + meal);
 
     List<Map> queryResults = await db.query(
         _foodHistoryTable,
-        where: '$_dateCol LIKE ? && $_mealCol = ?',
-        whereArgs: [day, mealType.toString()]
+        where: '$_dateCol LIKE ? AND $_mealCol = ?',
+        whereArgs: ['%$day%', meal]
     );
 
     return _convertToFoodObjectList(queryResults);
@@ -191,6 +216,50 @@ class DatabaseHelper {
     await db.delete(
         _weightHistoryTable, where: '$_id = ?', whereArgs: [id]
     );
+  }
+
+// User information functions
+  Future<User> getUserByID(int id) async {
+    Database db = await this.database;
+
+    List<Map> result = await db.query(_userInfoTable, where: '$_id = ?',
+        whereArgs: [id]);
+    return result.isNotEmpty ? User.fromMap(result.first) : Null;
+  }
+
+  Future<void> addUser(User user) async {
+    Database db = await this.database;
+
+    await db.insert(
+        _userInfoTable,
+        user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace
+    );
+  }
+
+  Future<void> replaceUser(User user) async {
+    Database db = await this.database;
+
+    await db.insert(
+        _userInfoTable,
+        user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace
+    );
+  }
+
+  Future<List<User>> getUsers() async {
+    Database db = await this.database;
+
+    List<Map> queryResults = await db.query(
+        'SELECT * FROM $_userInfoTable');
+
+    List<User> users = new List();
+    queryResults.forEach((result) {
+      User user= User.fromMap(result);
+      users.add(user);
+    });
+
+    return users;
   }
 
 }
