@@ -23,7 +23,8 @@ class FoodEntry {
       'calories': calories,
       'name': name,
       'date':date,
-      'meal': meal.value
+      'meal': meal.value,
+      'id': id
     };
     return map;
   }
