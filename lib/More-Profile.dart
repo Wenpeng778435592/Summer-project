@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:async';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/User_input/ActivityLevel.dart';
 
 class Profile_Section extends StatefulWidget {
@@ -110,8 +108,6 @@ class _Profile_SectionState extends State<Profile_Section> {
       },
     );
   }
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(

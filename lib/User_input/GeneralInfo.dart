@@ -41,7 +41,6 @@ class _Profile_SectionState extends State<Profile_Section> {
           child: Text(value),
         );
       }).toList(),
-
       onSaved: (value){
         setState(() {
           selectedGender = value;
