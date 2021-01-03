@@ -49,3 +49,6 @@ app.*.map.json
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Firebase
+google-services.json
