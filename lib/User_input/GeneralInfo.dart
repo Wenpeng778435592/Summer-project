@@ -7,6 +7,7 @@ import 'package:my_diet_diary/DataObjects/User.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import '../DataObjects/User.dart';
 
+
 class GeneralInfo_Section extends StatefulWidget {
   @override
   _GeneralInfo_SectionState createState() => _GeneralInfo_SectionState();

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:my_diet_diary/User_input/Goal.dart';
 import 'package:my_diet_diary/DataObjects/User.dart';
+import 'package:my_diet_diary/User_input/BodyFatYes.dart';
+
 
 
 
@@ -19,38 +21,13 @@ class _Bodyfat_SectionState extends State<Bodyfat_Section> {
   static const TextStyle labelStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   num BMR = 0;
-  int bodyfatPercentage = 0;
 
 
 
 
   @override
-  final GlobalKey<FormState> bodyfatkey = GlobalKey<FormState>();
 
-  Widget _buildBodyfat() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: 'Body fat',labelStyle: labelStyle,
-        hintText: 'Enter your body fat percentage in kg here',hintStyle: labelStyle,
-      ),
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
-      onChanged: (value){
-        setState(() {
-          // if(_currentUser.weight == null){
-          //   _currentUser.weight = int.parse(value);
-          // };
-          bodyfatPercentage = int.parse(value);
-        });},
-      validator: (value){
-        if(value.trim().isEmpty){
-          return 'Body fat is required.';
-        }
-      },
-    );
-  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -93,8 +70,7 @@ class _Bodyfat_SectionState extends State<Bodyfat_Section> {
                   style: generalStyle,
                 ),
                 onPressed: (){
-                  _buildBodyfat();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Goal_Section(widget._currentUser, BMR)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => BodyFatYes_Section(widget._currentUser)));
                 },
               ),
               RaisedButton(

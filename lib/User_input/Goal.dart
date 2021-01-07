@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:my_diet_diary/User_input/TargetWeight.dart';
 import 'package:my_diet_diary/DataObjects/User.dart';
+import 'package:my_diet_diary/User_input/SuggestedIntake.dart';
 
 
 class Goal_Section extends StatefulWidget {
@@ -58,11 +59,12 @@ class _Goal_SectionState extends State<Goal_Section> {
             children: <Widget>[
               RaisedButton(
                 child: Text(
-                  'Gain Muscle(bulk)',
+                  'Gain Muscle (bulk)',
                   style: generalStyle,
                 ),
                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
+                  widget._currentUser.goal = 'Gain Muscle (bulk)';
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section(widget._currentUser, widget.BMR)));
                 },
               ),
               SizedBox(height:30),
@@ -72,7 +74,8 @@ class _Goal_SectionState extends State<Goal_Section> {
                   style: generalStyle,
                 ),
                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
+                  widget._currentUser.goal = 'Maintain Weight';
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestedDailyIntake_Section(widget._currentUser, widget.BMR)));
                 },
               ),
               SizedBox(height:30),
@@ -82,7 +85,8 @@ class _Goal_SectionState extends State<Goal_Section> {
                   style: generalStyle,
                 ),
                 onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
+                  widget._currentUser.goal = 'Lose Weight';
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section(widget._currentUser, widget.BMR)));
                 },
               ),
             ],
