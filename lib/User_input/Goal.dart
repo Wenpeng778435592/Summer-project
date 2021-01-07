@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-
 import 'package:my_diet_diary/User_input/TargetWeight.dart';
+import 'package:my_diet_diary/DataObjects/User.dart';
+
 
 class Goal_Section extends StatefulWidget {
+  User _currentUser;
+  num BMR;
+  Goal_Section(this._currentUser, this.BMR);
   @override
   _Goal_SectionState createState() => _Goal_SectionState();
 }
@@ -19,22 +23,20 @@ class _Goal_SectionState extends State<Goal_Section> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        title: Stack(
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios_outlined),
-              onPressed: (){
-                Navigator.pop(context);
-              },
+            Positioned(
+              left: 0,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_outlined),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            Text('Goal',
-              style: generalStyle,),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
-              },
+            Align(
+              child: Text('Goal',
+                style: generalStyle,),
             ),
           ],
         ),
@@ -56,11 +58,11 @@ class _Goal_SectionState extends State<Goal_Section> {
             children: <Widget>[
               RaisedButton(
                 child: Text(
-                  'Gain Muscle(balk)',
+                  'Gain Muscle(bulk)',
                   style: generalStyle,
                 ),
                 onPressed: (){
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
                 },
               ),
               SizedBox(height:30),
@@ -70,7 +72,7 @@ class _Goal_SectionState extends State<Goal_Section> {
                   style: generalStyle,
                 ),
                 onPressed: (){
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
                 },
               ),
               SizedBox(height:30),
@@ -80,7 +82,7 @@ class _Goal_SectionState extends State<Goal_Section> {
                   style: generalStyle,
                 ),
                 onPressed: (){
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section()));
                 },
               ),
             ],

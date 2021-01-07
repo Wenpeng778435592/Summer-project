@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'package:my_diet_diary/DataObjects/User.dart';
 
 class TargetWeight_Section extends StatefulWidget {
   @override
@@ -37,22 +38,20 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        title: Stack(
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios_outlined),
-              onPressed: (){
-                Navigator.pop(context);
-              },
+            Positioned(
+              left: 0,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_outlined),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            Text('Target Weight',
-              style: generalStyle,),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-              onPressed: (){
-                Navigator.pop(context);
-              },
+            Align(
+              child: Text('Target Weight',
+                style: generalStyle,),
             ),
           ],
         ),
