@@ -1,10 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:my_diet_diary/DataObjects/User.dart';
 
 class SuggestedDailyIntake_Section extends StatefulWidget {
-  int BMR;
+  num BMR;
   User _currentUser;
   SuggestedDailyIntake_Section(this._currentUser, this.BMR);
   @override
@@ -19,6 +21,8 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
   num dailyIntake = 0;
   num requiredTime = 0;
   num maintainIntake = 0;
+  num loseWeightTime = 0;
+  num beta = 0;
   @override
 
   num _intake(BMR, _pattern){
@@ -26,13 +30,13 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
       if(widget._currentUser.activityLevel == 'Sedentary(desk job)'){
         dailyIntake = BMR;
       }
-      if(widget._currentUser.activityLevel == 'Light exercise(1-3 times per week)'){
+      else if(widget._currentUser.activityLevel == 'Light exercise(1-3 times per week)'){
         dailyIntake = BMR * 1.2;
       }
-      if(widget._currentUser.activityLevel == 'Moderate exercise(4-5 times per week)'){
+      else if(widget._currentUser.activityLevel == 'Moderate exercise(4-5 times per week)'){
         dailyIntake = BMR * 1.5;
       }
-      if(widget._currentUser.activityLevel == 'Active exercise(daily or intense sport 3-4 times per week)'){
+      else if(widget._currentUser.activityLevel == 'Active exercise(daily or intense sport 3-4 times per week)'){
         dailyIntake = BMR * 1.55;
       }
     }
@@ -51,6 +55,20 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
       }
     }
     else if(_pattern == 'Lose Weight'){
+      loseWeightTime = _goalTime(widget._currentUser.weight, widget._currentUser.targetWeight, 'Lose Weight');
+      beta = (0.25 * (widget._currentUser.weight - widget._currentUser.targetWeight) * 1000 * 0.3 * 4 + 0.75 * (widget._currentUser.weight - widget._currentUser.targetWeight) * 1000 * 0.87 * 9 );
+      if(widget._currentUser.activityLevel == 'Sedentary(desk job)'){
+        dailyIntake = beta / loseWeightTime + BMR;
+      }
+      else if(widget._currentUser.activityLevel == 'Light exercise(1-3 times per week)'){
+        dailyIntake = beta / loseWeightTime + BMR * 1.2;
+      }
+      else if(widget._currentUser.activityLevel == 'Moderate exercise(4-5 times per week)'){
+        dailyIntake = beta / loseWeightTime + BMR * 1.5;
+      }
+      else if(widget._currentUser.activityLevel == 'Active exercise(daily or intense sport 3-4 times per week)'){
+        dailyIntake = beta / loseWeightTime + BMR * 1.55;
+      }
 
     }
     return dailyIntake;
@@ -59,13 +77,16 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
   num _goalTime(currentWeight, targetWeight, _pattern){
     maintainIntake = _intake(widget.BMR, 'Maintain Weight');
     if(_pattern == 'Maintain Weight'){
-
+      requiredTime = 0;
+      return requiredTime;
     }
     else if(_pattern == 'Gain Muscle (bulk)'){
       requiredTime = (0.25 * (targetWeight - currentWeight) * 1000 * 0.3 * 4 + 0.75 * (targetWeight - currentWeight) * 1000 * 0.87 * 9) / 0.07 / maintainIntake;
       return requiredTime;
     }
     else if(_pattern == 'Lose Weight'){
+      requiredTime = (log(targetWeight/currentWeight)) / (log(0.99)) * 7;
+      return requiredTime;
 
     }
   }
@@ -109,7 +130,7 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                _intake(widget.BMR, widget._currentUser.goal).toString() + 'cal',
+                _intake(widget.BMR, widget._currentUser.goal).round().toString() + ' cal',
                 style: generalStyle,
               ),
             ),
@@ -127,7 +148,7 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                'days',
+                _goalTime(widget._currentUser.weight, widget._currentUser.targetWeight, widget._currentUser.goal).round().toString() + ' days',
                 style: generalStyle,
               ),
             ),
@@ -136,7 +157,7 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                'Note: gaining muscle is a slow process, gaining too fast (faster than recommended) can result in excessive amount of fit gain. ',
+                'Note: gaining muscle is a slow process, gaining too fast (faster than recommended) can result in excessive amount of fat gain. ',
                 style: generalStyle,
               ),
             ),
