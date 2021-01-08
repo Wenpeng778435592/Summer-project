@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/User_input/ActivityLevel.dart';
+import 'package:my_diet_diary/User_input/GeneralInfo.dart';
+
+import 'User_input/GeneralInfo.dart';
 
 class Profile_Section extends StatefulWidget {
   @override
@@ -131,8 +134,7 @@ class _Profile_SectionState extends State<Profile_Section> {
             IconButton(
               icon: Icon(Icons.arrow_forward_ios_outlined),
               onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Activity_Section()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
 
               },
             ),
@@ -140,37 +142,28 @@ class _Profile_SectionState extends State<Profile_Section> {
         ),
         backgroundColor: Colors.amber[800],
       ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Form(
-          key: formkey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                _buildAge(),
-                _buildHeight(),
-                _buildWeight(),
-                _buildGender(),
-                SizedBox(height: 100),
-                RaisedButton(
-                  child: Text(
-                    'Next',
-                    style: generalStyle,
-                  ),
-                  onPressed: (){
-                    if(formkey.currentState.validate()){
-                      print('Nice you made it!');
-                    }
-                },
-                )
-
-              ],
-
-            ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
+            child: RaisedButton(
+            child:Text('View User Information', style: generalStyle,),
+            color: Colors.amber,
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
+            },
+        ),
           ),
-          ),
+        ],
+
       ),
+
     );
   }
 }
+
+
+
+

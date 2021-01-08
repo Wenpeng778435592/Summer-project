@@ -1,46 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'package:my_diet_diary/User_input/Goal.dart';
 import 'package:my_diet_diary/DataObjects/User.dart';
-import 'package:my_diet_diary/User_input/SuggestedIntake.dart';
 
-class TargetWeight_Section extends StatefulWidget {
+class BodyFatYes_Section extends StatefulWidget {
   User _currentUser;
-  num BMR;
-  TargetWeight_Section(this._currentUser, this.BMR);
+  BodyFatYes_Section(this._currentUser);
   @override
-  _TargetWeight_SectionState createState() => _TargetWeight_SectionState();
+  _BodyFatYes_SectionState createState() => _BodyFatYes_SectionState();
 }
 
-class _TargetWeight_SectionState extends State<TargetWeight_Section> {
+class _BodyFatYes_SectionState extends State<BodyFatYes_Section> {
+  @override
   static const TextStyle generalStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const TextStyle labelStyle =
   TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-  @override
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  int bodyfatPercentage = 0;
+  num BMR = 0;
+  final GlobalKey<FormState> bodyfatkey = GlobalKey<FormState>();
 
-  Widget _buildTargetWeight() {
+  Widget _buildBodyfat() {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: 'TargetWeight(kg)',labelStyle: labelStyle,
-        hintText: 'Enter your target weight in kg here',hintStyle: labelStyle,
+        labelText: 'Body fat',labelStyle: generalStyle,
+        hintText: 'Enter body fat percentage',hintStyle: generalStyle,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
       onChanged: (value){
         setState(() {
-          widget._currentUser.targetWeight = int.parse(value);
+          bodyfatPercentage = int.parse(value);
         });},
       validator: (value){
         if(value.trim().isEmpty){
-          return 'Target weight is required.';
+          return 'Body fat is required.';
         }
       },
     );
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +60,7 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
               ),
             ),
             Align(
-              child: Text('Target Weight',
+              child: Text('Body Fat',
                 style: generalStyle,),
             ),
           ],
@@ -66,46 +68,36 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
         backgroundColor: Colors.amber[800],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
             padding: EdgeInsets.all(10),
-            child: Text(
-              'What is your target weight?',
-              style: generalStyle,
-            ),
-          ),
-          
-          Container(
-            padding: EdgeInsets.all(10),
-              child: Form(
-                key:formkey,
-                child:SingleChildScrollView(
-                  child:_buildTargetWeight(),
-                ),
+            child: Form(
+              key: bodyfatkey,
+              child: SingleChildScrollView(
+                child:_buildBodyfat(),
               ),
+            ),
           ),
 
           RaisedButton(
             child: Text(
-              'Next',
+              'Submit',
               style: generalStyle,
             ),
             onPressed: (){
-              if(formkey.currentState.validate()){
+              if(bodyfatkey.currentState.validate()){
                 print('Nice you made it!');
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestedDailyIntake_Section(widget._currentUser, widget.BMR)));
+                BMR = 370 + 21.6 * ((100 - bodyfatPercentage) * widget._currentUser.weight);
+                print(BMR);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Goal_Section(widget._currentUser, BMR)));
               }
+
             },
           ),
-
-
-
-
-
-
         ],
-      ),
-    );;
+
+            ),
+    );
   }
 }
