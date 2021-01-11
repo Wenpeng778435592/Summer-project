@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.my_diet_diary">
+
    <application
         android:label="my_diet_diary"
         android:icon="@mipmap/ic_launcher">
