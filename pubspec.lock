@@ -63,7 +63,9 @@ packages:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0-nullsafety.1"
+
+    version: "1.2.0-nullsafety.3"
+
   ffi:
     dependency: transitive
     description:
@@ -171,6 +173,15 @@ packages:
     source: hosted
     version: "1.1.1"
   intl:
+
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.1"
+  js:
+
     dependency: transitive
     description:
       name: intl
@@ -204,7 +215,9 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0-nullsafety.1"
+
+    version: "1.8.0-nullsafety.3"
+
   path_provider:
     dependency: "direct main"
     description:
@@ -356,7 +369,9 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0-nullsafety.2"
+
+    version: "1.8.0-nullsafety.4"
+
   sqflite:
     dependency: "direct main"
     description:
@@ -391,7 +406,9 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0-nullsafety.1"
+
+    version: "1.1.0-nullsafety.3"
+
   synchronized:
     dependency: transitive
     description:
@@ -426,7 +443,9 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0-nullsafety.3"
+
+    version: "2.1.0-nullsafety.5"
+
   win32:
     dependency: transitive
     description:
@@ -442,5 +461,7 @@ packages:
     source: hosted
     version: "0.1.2"
 sdks:
-  dart: ">=2.10.2 <2.11.0"
+
+  dart: ">=2.12.0-0.0 <3.0.0"
+
   flutter: ">=1.22.2 <2.0.0"

@@ -3,9 +3,14 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/User_input/BodyFat.dart';
+import 'package:my_diet_diary/DataObjects/User.dart';
+
 
 
 class Activity_Section extends StatefulWidget {
+  User _currentUser;
+  Activity_Section(this._currentUser);
+
   @override
   _Activity_SectionState createState() => _Activity_SectionState();
 }
@@ -24,18 +29,17 @@ class _Activity_SectionState extends State<Activity_Section> {
   @override
 
 
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> activityFormkey = GlobalKey<FormState>();
+
   String selectedActivityLevel;
 
   Widget _buildActivity() {
     return DropdownButtonFormField(
       isExpanded: true,
       decoration: InputDecoration(
-        labelText: 'Activity level',labelStyle: labelStyle,
-        hintText: 'Select your activity level here',hintStyle: labelStyle,
+        labelText: 'Activity Level',labelStyle: generalStyle,
+        hintText: 'Select your activity level here',hintStyle: generalStyle,
       ),
-      key: formkey,
-      value: selectedActivityLevel,
       items: _activity.map((value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -43,16 +47,13 @@ class _Activity_SectionState extends State<Activity_Section> {
         );
       }).toList(),
 
-      onSaved: (value){
-        setState(() {
-          selectedActivityLevel = value;
-        });},
+
       onChanged: (value){
         setState(() {
-          selectedActivityLevel = value;
+          widget._currentUser.activityLevel = value.toString();
         });},
       validator: (value){
-        if(value.isNull){
+        if(value == null){
           return 'Activity level is required.';
         }
       },
@@ -70,23 +71,20 @@ class _Activity_SectionState extends State<Activity_Section> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        title: Stack(
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.arrow_back_ios_outlined),
-              onPressed: (){
-                Navigator.pop(context);
-              },
+            Positioned(
+              left: 0,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back_ios_outlined),
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            Text('Activity Level',
-              style: generalStyle,),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Bodyfat_Section()),
-                );
-              },
+            Align(
+              child: Text('Activity Level',
+                style: generalStyle,),
             ),
           ],
         ),
@@ -98,7 +96,7 @@ class _Activity_SectionState extends State<Activity_Section> {
           Container(
             padding: EdgeInsets.all(10),
             child: Form(
-              key: formkey,
+              key: activityFormkey,
               child: SingleChildScrollView(
                 child:_buildActivity(),
               ),
@@ -118,8 +116,10 @@ class _Activity_SectionState extends State<Activity_Section> {
               style: generalStyle,
             ),
             onPressed: (){
-              if(formkey.currentState.validate()){
+              if(activityFormkey.currentState.validate()){
+                print(widget._currentUser.activityLevel);
                 print('Nice you made it!');
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Bodyfat_Section(widget._currentUser)));
               }
             },
           )
@@ -128,3 +128,7 @@ class _Activity_SectionState extends State<Activity_Section> {
       );
   }
 }
+
+
+
+
