@@ -10,10 +10,9 @@ import 'package:my_diet_diary/QuickAdd.dart';
 import 'package:my_diet_diary/Report.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'DataObjects/FirebaseHelper.dart';
-import 'More-Profile.dart';
+import 'DatabaseHelpers/OpenFoodFactsHelper.dart';
+
 // Text(
 // 'More',
 // style: TextStyle(
@@ -44,6 +43,13 @@ class _HomeState extends State<Home> {
     Report_Section(),
     More_Section(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    var openfoodfacts = new OpenFoodFactsHelper();
+    openfoodfacts.getFoodFromBarcode("3168930502005");
+  }
 
   @override
   Widget build(BuildContext context) {
