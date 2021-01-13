@@ -88,7 +88,7 @@ class _BodyFatYes_SectionState extends State<BodyFatYes_Section> {
             onPressed: (){
               if(bodyfatkey.currentState.validate()){
                 print('Nice you made it!');
-                BMR = 370 + 21.6 * ((100 - bodyfatPercentage) * widget._currentUser.weight);
+                BMR = 370 + 21.6 * ((100 - bodyfatPercentage)/100 * widget._currentUser.weight);
                 print(BMR);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => Goal_Section(widget._currentUser, BMR)));
               }

@@ -106,6 +106,6 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
 
         ],
       ),
-    );;
+    );
   }
 }
