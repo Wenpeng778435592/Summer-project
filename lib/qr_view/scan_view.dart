@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:flutter/services.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'qr_view.dart';

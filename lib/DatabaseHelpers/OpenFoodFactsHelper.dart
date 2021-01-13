@@ -8,7 +8,7 @@ import 'package:openfoodfacts/utils/ProductQueryConfigurations.dart';
 
 class OpenFoodFactsHelper{
 
-  getFoodFromBarcode (String barcode) async {
+  Future<String> getFoodFromBarcode (String barcode) async {
     ProductQueryConfiguration configurations = ProductQueryConfiguration(
         barcode,
         language: OpenFoodFactsLanguage.ENGLISH,
@@ -18,9 +18,9 @@ class OpenFoodFactsHelper{
     ProductResult result = await OpenFoodAPIClient.getProduct(configurations);
 
     if(result.status != 1 || result == null) {
-      print("Error retreiving the product");
+      return "Error retreiving the product";
     }else{
-      print(result.product.productName);
+      return result.product.productName;
     }
 
   }
