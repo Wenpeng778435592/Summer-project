@@ -1,9 +1,5 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
-import 'package:my_diet_diary/DataObjects/Meal.dart';
-import 'dart:async';
 import 'package:my_diet_diary/Diary.dart';
 import 'package:my_diet_diary/Weight.dart';
 import 'package:my_diet_diary/QuickAdd.dart';

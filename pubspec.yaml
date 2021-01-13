@@ -27,6 +27,8 @@ dependencies:
   flutter_qr_reader: ^1.0.3
   # bar code
   ai_barcode: ^1.0.6
+  # scan Barcode
+  flutter_barcode_scanner: ^1.0.1
   #permissions apply
   permission_handler: ^5.0.0
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,7 @@ dependencies:
   openfoodfacts: ^0.3.14+1
 
 dev_dependencies:
+  test: ^1.5.1
   font_awesome_flutter: '>= 5.15.1'
   flutter_test:
     sdk: flutter
