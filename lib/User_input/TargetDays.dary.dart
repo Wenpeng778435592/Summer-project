@@ -51,16 +51,16 @@ class _TargetDays_SectionState extends State<TargetDays_Section> {
       loseWeightTime = widget._currentUser.targetDays;
       beta = (0.25 * (widget._currentUser.weight - widget._currentUser.targetWeight) * 1000 * 0.3 * 4 + 0.75 * (widget._currentUser.weight - widget._currentUser.targetWeight) * 1000 * 0.87 * 9 );
       if(widget._currentUser.activityLevel == 'Sedentary(desk job)'){
-        dailyIntake = beta / loseWeightTime + BMR;
+        dailyIntake = BMR - beta / loseWeightTime ;
       }
       else if(widget._currentUser.activityLevel == 'Light exercise(1-3 times per week)'){
-        dailyIntake = beta / loseWeightTime + BMR * 1.2;
+        dailyIntake = BMR * 1.2 - beta / loseWeightTime ;
       }
       else if(widget._currentUser.activityLevel == 'Moderate exercise(4-5 times per week)'){
-        dailyIntake = beta / loseWeightTime + BMR * 1.5;
+        dailyIntake = BMR * 1.5 - beta / loseWeightTime ;
       }
       else if(widget._currentUser.activityLevel == 'Active exercise(daily or intense sport 3-4 times per week)'){
-        dailyIntake = beta / loseWeightTime + BMR * 1.55;
+        dailyIntake = BMR * 1.55 - beta / loseWeightTime ;
       }
     }
     return dailyIntake;
