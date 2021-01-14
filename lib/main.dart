@@ -1,16 +1,12 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
-import 'package:my_diet_diary/DataObjects/Meal.dart';
-import 'dart:async';
 import 'package:my_diet_diary/Diary.dart';
 import 'package:my_diet_diary/Weight.dart';
 import 'package:my_diet_diary/QuickAdd.dart';
-import 'package:my_diet_diary/Report.dart';
+import 'package:my_diet_diary/Energy.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sqflite/sqflite.dart';
 
-import 'DataObjects/User.dart';
 // Text(
 // 'More',
 // style: TextStyle(
@@ -18,11 +14,13 @@ import 'DataObjects/User.dart';
 // fontWeight: FontWeight.bold
 // ),
 // ),
+final databaseReference = FirebaseDatabase().reference().reference();
 
-void main() {
+main() {
   runApp(MaterialApp(
-    home: Home()
-  ));//MyApp is a widget/class
+    // If current user doesn't exists, show profile screen to create new user
+      home: Home()
+  ));
 }
 
 class Home extends StatefulWidget {
@@ -31,8 +29,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var dbHelper = DatabaseHelper();
-
   int _currentIndex = 0;
   List<Widget> _options = <Widget>[
     Dairy_Section(),
@@ -98,7 +94,6 @@ class _HomeState extends State<Home> {
 
   void _insert() async {
     // row to insert
-    dbHelper.getAllFoodHistory();
   }
 }
 

@@ -48,8 +48,6 @@ class _GeneralInfo_SectionState extends State<GeneralInfo_Section> {
           child: Text(value),
         );
       }).toList(),
-
-
       onChanged: (value){
         setState(() {
           _currentUser.gender = value.toString();

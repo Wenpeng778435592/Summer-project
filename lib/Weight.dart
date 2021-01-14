@@ -19,70 +19,74 @@ class _Weight_sectionState extends State<Weight_section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-      body:Column(
-        children: <Widget>[
-          SizedBox(height: 20),
-          Center(
-            child: Text(
-              'Current Weight',
-              style: generalStyle
-            ),
-          ),
-          SizedBox(height:20),
-          Center(
-            child: Text(
-                'x' + ' kg',
-                style: generalStyle
-            ),
-          ),
-          SizedBox(height:20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body:SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
             children: <Widget>[
-              Column(
+              Center(
+                child: Text(
+                    'Current Weight',
+                    style: generalStyle
+                ),
+              ),
+              SizedBox(height:20),
+              Center(
+                child: Text(
+                    'x' + ' kg',
+                    style: generalStyle
+                ),
+              ),
+              SizedBox(height:20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                      'Start',
-                      style: generalStyle
+                  Column(
+                    children: <Widget>[
+                      Text(
+                          'Start',
+                          style: generalStyle
+                      ),
+                      SizedBox(height:20),
+                      Text(
+                          'x' + ' kg',
+                          style: generalStyle
+                      ),
+                    ],
                   ),
-                  SizedBox(height:20),
-                  Text(
-                      'x' + ' kg',
-                      style: generalStyle
+                  Column(
+                    children: <Widget>[
+                      Text(
+                          'Goal',
+                          style: generalStyle
+                      ),
+                      SizedBox(height:20),
+                      Text(
+                          'y' + ' kg',
+                          style: generalStyle
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Column(
-                children: <Widget>[
-                  Text(
-                      'Goal',
-                      style: generalStyle
-                  ),
-                  SizedBox(height:20),
-                  Text(
-                      'y' + ' kg',
-                      style: generalStyle
-                  ),
-                ],
+              SizedBox(height:100),
+              Center(
+                child: Text(
+                    'Enter Graph Here',
+                    style: generalStyle
+                ),
               ),
+              SizedBox(height:100),
+              Center(
+                child: Text(
+                    'for scrolldown purpose',
+                    style: generalStyle
+                ),
+              ),
+
             ],
           ),
-          SizedBox(height:100),
-          Center(
-            child: Text(
-                'Enter Graph Here',
-                style: generalStyle
-            ),
-          ),
-          SizedBox(height:100),
-          Center(
-            child: Text(
-                'for scrolldown purpose',
-                style: generalStyle
-            ),
-          ),
-
-        ],
+        ),
       ),
     );
   }

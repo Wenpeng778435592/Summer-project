@@ -9,6 +9,8 @@ class User {
   String goal;
   String activityLevel;
   int calorieGoal;
+  int targetDays;
+  num dailyIntake;
 
   User();
 
@@ -21,6 +23,8 @@ class User {
       'name': name,
       'gender':gender,
       'calorieGoal': calorieGoal,
+      'targetDays' : targetDays,
+      'dailyIntake' : dailyIntake,
       'activityLevel': activityLevel,
       'targetWeight': targetWeight,
       'id': id
@@ -35,6 +39,8 @@ class User {
     goal = map['goal'];
     name = map['name'];
     calorieGoal = map['calorieGoal'];
+    targetDays = map['targetDays'];
+    dailyIntake = map['dailyIntake'];
     activityLevel = map['activityLevel'];
     targetWeight = map['targetWeight'];
     height = map['height'];
