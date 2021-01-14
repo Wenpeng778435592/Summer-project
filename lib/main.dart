@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_diary/Diary.dart';
 import 'package:my_diet_diary/Weight.dart';
 import 'package:my_diet_diary/QuickAdd.dart';
-import 'package:my_diet_diary/Report.dart';
+import 'package:my_diet_diary/Energy.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

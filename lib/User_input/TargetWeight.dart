@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:my_diet_diary/DataObjects/User.dart';
-import 'package:my_diet_diary/User_input/SuggestedIntake.dart';
+import 'package:my_diet_diary/User_input/TargetDays.dary.dart';
 
 class TargetWeight_Section extends StatefulWidget {
   User _currentUser;
@@ -37,6 +37,9 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
       validator: (value){
         if(value.trim().isEmpty){
           return 'Target weight is required.';
+        }
+        else if(int.parse(value) >= widget._currentUser.weight){
+          return 'Number is invalid.';
         }
       },
     );
@@ -94,7 +97,7 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
             onPressed: (){
               if(formkey.currentState.validate()){
                 print('Nice you made it!');
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestedDailyIntake_Section(widget._currentUser, widget.BMR)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => TargetDays_Section(widget._currentUser, widget.BMR)));
               }
             },
           ),

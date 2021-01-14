@@ -31,170 +31,194 @@ class _More_SectionState extends State<More_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-          body: Column(
-              // mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+          body: SingleChildScrollView(
+            child: Column(
+                // mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
 
-                Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Recipes',
-                          style: generalStyle,
-                        ),
-                        IconButton(
-                          color: Colors.amber,
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Reciple_Section()),
-                            );
-                          },
-                          icon:Icon(Icons.keyboard_arrow_right_outlined),
-                          iconSize: 55,
-                        ),
-                      ]
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Recipes',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Reciple_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
                   ),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'MyFoods',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MyFood_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Divider(
-                  height: 10,
-                  thickness: 5,
-                  color: Colors.blue,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Profile',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Profile_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Settings',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Setting_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Notifications',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Notification_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Reminders',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Reminder_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Divider(
-                  height: 10,
-                  thickness: 5,
-                  color: Colors.blue,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Help',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Helps_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'About',
-                        style: generalStyle,
-                      ),
-                      IconButton(
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => About_Section()),
-                          );
-                        },
-                        icon:Icon(Icons.keyboard_arrow_right_outlined),
-                        iconSize: 55,
-                      ),
-                    ]
-                ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'MyFoods',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => MyFood_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Divider(
+                    height: 10,
+                    thickness: 5,
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Profile',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Profile_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Settings',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Setting_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Notifications',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Notification_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Reminders',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Reminder_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Divider(
+                    height: 10,
+                    thickness: 5,
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'Help',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Helps_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 5, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            'About',
+                            style: generalStyle,
+                          ),
+                          IconButton(
+                            color: Colors.amber,
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => About_Section()),
+                              );
+                            },
+                            icon:Icon(Icons.keyboard_arrow_right_outlined),
+                            iconSize: 55,
+                          ),
+                        ]
+                    ),
+                  ),
 
-              ],
+                ],
     ),
+          ),
     );
   }
 }

@@ -26,61 +26,69 @@ class _QuickAdd_SectionState extends State<QuickAdd_Section> {
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-      body:Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              RaisedButton(
-                child: Text('B',
-                  style: generalStyle,),
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
-                  );
-                },
+      body:Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('B',
+                      style: generalStyle,),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+                    onPressed: (){
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Breakfast_Section()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('S',
+                      style: generalStyle,),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+                    onPressed: (){
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Snack_Section()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              RaisedButton(
-                child: Text('S',
-                  style: generalStyle,),
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Snack_Section()),
-                  );
-                },
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text('L',
+                      style: generalStyle,),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+                    onPressed: (){
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Lunch_Section()),
+                      );
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('D',
+                      style: generalStyle,),
+                    shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+                    onPressed: (){
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Dinner_Section()),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              RaisedButton(
-                child: Text('L',
-                  style: generalStyle,),
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Lunch_Section()),
-                  );
-                },
-              ),
-              RaisedButton(
-                child: Text('D',
-                  style: generalStyle,),
-                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                onPressed: (){
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Dinner_Section()),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

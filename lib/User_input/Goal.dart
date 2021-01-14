@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_diet_diary/User_input/SuggestedIntake.dart';
 import 'dart:async';
 import 'package:my_diet_diary/User_input/TargetWeight.dart';
 import 'package:my_diet_diary/DataObjects/User.dart';
-import 'package:my_diet_diary/User_input/SuggestedIntake.dart';
+import 'package:my_diet_diary/User_input/TargetDays.dary.dart';
 
 
 class Goal_Section extends StatefulWidget {
@@ -57,16 +58,6 @@ class _Goal_SectionState extends State<Goal_Section> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              RaisedButton(
-                child: Text(
-                  'Gain Muscle (bulk)',
-                  style: generalStyle,
-                ),
-                onPressed: (){
-                  widget._currentUser.goal = 'Gain Muscle (bulk)';
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TargetWeight_Section(widget._currentUser, widget.BMR)));
-                },
-              ),
               SizedBox(height:30),
               RaisedButton(
                 child: Text(
@@ -75,6 +66,7 @@ class _Goal_SectionState extends State<Goal_Section> {
                 ),
                 onPressed: (){
                   widget._currentUser.goal = 'Maintain Weight';
+                  widget._currentUser.targetWeight = widget._currentUser.weight;
                   Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestedDailyIntake_Section(widget._currentUser, widget.BMR)));
                 },
               ),
