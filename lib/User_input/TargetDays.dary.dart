@@ -153,8 +153,6 @@ class _TargetDays_SectionState extends State<TargetDays_Section> {
                     if(targetDaysKey.currentState.validate()){
                       widget._currentUser.dailyIntake = _intake(widget.BMR, widget._currentUser.goal);
                       print('Nice you made it!');
-                      print(dailyIntake);
-                      print(widget._currentUser.targetDays);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SuggestedDailyIntake_Section(widget._currentUser, widget.BMR)));
 
 
