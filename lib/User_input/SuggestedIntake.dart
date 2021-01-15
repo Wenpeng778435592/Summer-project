@@ -1,9 +1,10 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:my_diet_diary/DataObjects/User.dart';
+import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
+import 'package:my_diet_diary/Diary.dart';
 
 class SuggestedDailyIntake_Section extends StatefulWidget {
   User _currentUser;
@@ -21,6 +22,7 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
   @override
 
   num dailyIntake = 0;
+  DatabaseHelper dbHelper = new DatabaseHelper();
 
 
   @override
@@ -108,6 +110,22 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
               child: Text(
                 widget._currentUser.targetDays.round().toString() + ' days',
                 style: generalStyle,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            child: Center(
+              child: RaisedButton(
+                child: Text(
+                  'Finish',
+                  style: generalStyle,
+                ),
+                onPressed: (){
+                  print('Nice you made it!');
+                  dbHelper.addUser(widget._currentUser);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Dairy_Section()));
+                },
               ),
             ),
           ),
