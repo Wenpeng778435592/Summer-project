@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:async';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/User_input/BodyFat.dart';
 import 'package:my_diet_diary/DataObjects/User.dart';
 
@@ -35,6 +32,7 @@ class _Activity_SectionState extends State<Activity_Section> {
 
   Widget _buildActivity() {
     return DropdownButtonFormField(
+      value: widget._currentUser.activityLevel,
       isExpanded: true,
       decoration: InputDecoration(
         labelText: 'Activity Level',labelStyle: generalStyle,
@@ -46,7 +44,6 @@ class _Activity_SectionState extends State<Activity_Section> {
           child: Text(value),
         );
       }).toList(),
-
 
       onChanged: (value){
         setState(() {
@@ -61,11 +58,6 @@ class _Activity_SectionState extends State<Activity_Section> {
     );
 
   }
-
-
-
-
-
 
   Widget build(BuildContext context) {
     return Scaffold(
