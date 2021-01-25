@@ -2,6 +2,6 @@ import 'package:algolia/algolia.dart';
 
 class AlgoliaApplication{
   static final Algolia algolia = Algolia.init(
-      applicationId: "ZDYLDI0MXO",
-      apiKey: "64ad0d3afe63a8bea4101ba433d17285",);
+      applicationId: "BN5R3AE681",
+      apiKey: "90da7e997053a5bcc7f702dbf26f9246",);
 }
