@@ -7,13 +7,7 @@ import 'package:my_diet_diary/Energy.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-// Text(
-// 'More',
-// style: TextStyle(
-// fontSize: 30,
-// fontWeight: FontWeight.bold
-// ),
-// ),
+
 final databaseReference = FirebaseDatabase().reference().reference();
 
 main() {
@@ -45,13 +39,6 @@ class _HomeState extends State<Home> {
 
       body: _options.elementAt(_currentIndex),
 
-
-      // body: Container(
-      //   child: Image(
-      //     // image:AssetImage('assets/sample_1.jpg'),
-      //     image:NetworkImage('https://images.unsplash.com/photo-1531113463068-6f334622d795?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'),
-      //   ),
-      // ),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

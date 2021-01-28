@@ -132,13 +132,16 @@ class DisplaySearchResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
 
-          Text(short_names ?? "", style: TextStyle(color: Colors.black ),),
-          Divider(color: Colors.black,),
-          SizedBox(height: 20)
-        ]
+            Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            Divider(color: Colors.black,),
+            SizedBox(height: 20)
+          ]
+      ),
     );
   }
 }
