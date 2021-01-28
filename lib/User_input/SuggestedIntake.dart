@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:my_diet_diary/DataObjects/User.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import 'package:my_diet_diary/Diary.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SuggestedDailyIntake_Section extends StatefulWidget {
   User _currentUser;
@@ -122,13 +121,9 @@ class _SuggestedDailyIntake_SectionState extends State<SuggestedDailyIntake_Sect
                   'Finish',
                   style: generalStyle,
                 ),
-                onPressed: () async{
+                onPressed: (){
                   print('Nice you made it!');
-                  int id = await dbHelper.addUser(widget._currentUser);
-
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setInt("currentUserID", id);
-
+                  dbHelper.addUser(widget._currentUser);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Dairy_Section()));
                 },
               ),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:my_diet_diary/User_input/ActivityLevel.dart';
 import 'package:my_diet_diary/User_input/GeneralInfo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'DataObjects/DatabaseHelper.dart';
-import 'DataObjects/User.dart';
 import 'User_input/GeneralInfo.dart';
 
 class Profile_Section extends StatefulWidget {
@@ -14,109 +12,104 @@ class Profile_Section extends StatefulWidget {
 
 class _Profile_SectionState extends State<Profile_Section> {
   static const TextStyle generalStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  static const TextStyle buttonStyle =
-      TextStyle(fontSize: 18, color: Colors.black);
-
-  Future userFuture;
-
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle labelStyle =
+  TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  List<String> _gender = [
+    'Male',
+    'Female',
+    'Prefer not to say'
+  ];
   @override
-  void initState() {
-    super.initState();
-    userFuture = _getUserFuture();
+
+
+
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final dropdownkey = GlobalKey<FormState>();
+  String selectedGender;
+
+  Widget _buildGender() {
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        labelText: 'Gender',labelStyle: labelStyle,
+        hintText: 'Select your gender here',hintStyle: labelStyle,
+      ),
+      key: dropdownkey,
+      value: selectedGender,
+      items: _gender.map((value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+
+      onSaved: (value){
+        setState(() {
+          selectedGender = value;
+        });},
+      onChanged: (value){
+        setState(() {
+          selectedGender = value;
+        });},
+      validator: (value){
+        if(value.isNull){
+          return 'Gender is required.';
+        }
+      },
+
+    );
+
   }
-
-  _getUserFuture() async {
-    DatabaseHelper dbHelper = new DatabaseHelper();
-    SharedPreferences sp = await SharedPreferences.getInstance();
-
-    int currentUserID = sp.getInt("currentUserID");
-    return await dbHelper.getUserByID(currentUserID);
+  Widget _buildAge() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Age',labelStyle: labelStyle,
+        hintText: 'Enter your age here',hintStyle: labelStyle,
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (value){
+        if(value.trim().isEmpty){
+          return 'Age is required.';
+        }
+      },
+    );
   }
-
-  Widget buildProfile(User user) {
-    return SingleChildScrollView(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-        child: ListView(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text("Profile", style: generalStyle),
-                OutlinedButton(
-                    child: Text("Edit", style: buttonStyle),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GeneralInfo_Section()));
-                    })
-              ]),
-              SizedBox(
-                height: 40,
-              ),
-              Row(children: [Text("General Information", style: buttonStyle)]),
-              Divider(
-                height: 15,
-                thickness: 2,
-              ),
-              ListTile(
-                leading: const Icon(Icons.today),
-                title: const Text('Age'),
-                subtitle: new Text((user.age).toString()),
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.tape),
-                title: const Text('Height'),
-                subtitle: new Text((user.height).toString() + " cm"),
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.weight),
-                title: const Text('Weight'),
-                subtitle: new Text((user.weight).toString() + " kg"),
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.venusMars),
-                title: const Text('Gender'),
-                subtitle: new Text(user.gender),
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.chartLine),
-                title: const Text('Activity Level'),
-                subtitle: new Text(user.activityLevel),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(children: [Text("Goals", style: buttonStyle)]),
-              Divider(
-                height: 15,
-                thickness: 2,
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.bullseye),
-                title: const Text('Goal'),
-                subtitle: new Text((user.goal).toString()),
-              ),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.utensils),
-                title: const Text('Calorie Goal'),
-                subtitle: new Text((user.calorieGoal).toString()),
-              ),
-              user.targetDays != null
-                  ? ListTile(
-                      leading: const Icon(FontAwesomeIcons.calendarDay),
-                      title: const Text('Target Days'),
-                      subtitle: new Text((user.targetDays).toString()),
-                    )
-                  : new Container(width: 0, height: 0),
-              ListTile(
-                leading: const Icon(FontAwesomeIcons.weight),
-                title: const Text('Weight Goal'),
-                subtitle: new Text((user.targetWeight).toString() + " kg"),
-              )
-            ]));
+  Widget _buildHeight() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Height(cm)',labelStyle: labelStyle,
+        hintText: 'Enter your height in cm here',hintStyle: labelStyle,
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (value){
+        if(value.trim().isEmpty){
+          return 'Height is required.';
+        }
+      },
+    );
+  }
+  Widget _buildWeight() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Weight(kg)',labelStyle: labelStyle,
+        hintText: 'Enter your weight in kg here',hintStyle: labelStyle,
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (value){
+        if(value.trim().isEmpty){
+          return 'Weight is required.';
+        }
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -124,36 +117,49 @@ class _Profile_SectionState extends State<Profile_Section> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined),
-              onPressed: () {
+              onPressed: (){
                 Navigator.pop(context);
               },
             ),
-            Text(
-              'Profile',
-              style: generalStyle,
+            Text('Profile',
+              style: generalStyle,),
+            IconButton(
+              icon: Icon(Icons.arrow_forward_ios_outlined),
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
+
+              },
             ),
           ],
         ),
         backgroundColor: Colors.amber[800],
       ),
-      body: Container(
-          child: FutureBuilder(
-              future: userFuture,
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                  case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
-                    break;
-                  default:
-                    if (snapshot.hasError)
-                      return Text("Error " + snapshot.error.toString());
-                    return buildProfile(snapshot.data);
-                }
-              })),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
+            child: RaisedButton(
+            child:Text('View User Information', style: generalStyle,),
+            color: Colors.amber,
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
+            },
+        ),
+          ),
+        ],
+
+      ),
+
     );
   }
 }
+
+
+
+

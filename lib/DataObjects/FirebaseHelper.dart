@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 
-import '../DataObjects/FoodItem.dart';
+import 'FoodItem.dart';
 
 class FirebaseHelper{
 

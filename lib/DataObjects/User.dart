@@ -21,10 +21,10 @@ class User {
       'age': age,
       'goal': goal,
       'name': name,
-      'gender': gender,
+      'gender':gender,
       'calorieGoal': calorieGoal,
-      'targetDays': targetDays,
-      'dailyIntake': dailyIntake,
+      'targetDays' : targetDays,
+      'dailyIntake' : dailyIntake,
       'activityLevel': activityLevel,
       'targetWeight': targetWeight,
       'id': id
@@ -45,9 +45,5 @@ class User {
     targetWeight = map['targetWeight'];
     height = map['height'];
     gender = map['gender'];
-  }
-
-  bool isEmpty() {
-    return id == null;
   }
 }

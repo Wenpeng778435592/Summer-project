@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../DataObjects/FoodEntry.dart';
-import '../DataObjects/Meal.dart';
-import '../DataObjects/User.dart';
-import '../DataObjects/WeightEntry.dart';
+import 'FoodEntry.dart';
+import 'Meal.dart';
+import 'User.dart';
+import 'WeightEntry.dart';
 
 class DatabaseHelper {
 
@@ -39,8 +39,6 @@ class DatabaseHelper {
   static final _userGoal = "goal";
   static final _userActivityLevel = "activityLevel";
   static final _userCalorieGoal = "calorieGoal";
-  static final _userDailyIntake = "dailyIntake";
-  static final _userTargetDays = "targetDays";
 
   static Database _database;
   static DatabaseHelper _databaseHelper; //SINGLETON DBHELPER
@@ -75,6 +73,8 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
 
+    print("new version");
+
     //Create food table
     await db
         .execute(
@@ -95,9 +95,7 @@ class DatabaseHelper {
         .execute(
         "CREATE TABLE $_userInfoTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_userAgeCol INTEGER,"
             + "$_userHeightCol INTEGER, $_userWeightCol INTEGER, $_userTargetWeightCol INTEGER,$_userGenderCol TEXT,"
-            + "$_userNameCol TEXT, $_userGoal TEXT, $_userActivityLevel INTEGER, $_userCalorieGoal INTEGER,"
-            + "$_userDailyIntake INTEGER, $_userTargetDays INTEGER)"
-
+            "$_userNameCol TEXT, $_userGoal TEXT, $_userActivityLevel INTEGER, $_userCalorieGoal INTEGER)"
     );
   }
 
@@ -109,6 +107,8 @@ class DatabaseHelper {
 
   Future<List<FoodEntry>> getAllFoodHistory() async {
     final Database db = await this.database;
+
+    print("db awaited");
 
     List<Map> queryResults = await db.rawQuery('SELECT * FROM $_foodHistoryTable');
 
@@ -227,16 +227,14 @@ class DatabaseHelper {
     return result.isNotEmpty ? User.fromMap(result.first) : Null;
   }
 
-  Future<int> addUser(User user) async {
+  Future<void> addUser(User user) async {
     Database db = await this.database;
 
-   int insertedID = await db.insert(
+    await db.insert(
         _userInfoTable,
         user.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
     );
-
-   return insertedID;
   }
 
   Future<void> replaceUser(User user) async {
