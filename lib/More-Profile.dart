@@ -27,10 +27,13 @@ class _Profile_SectionState extends State<Profile_Section> {
     userFuture = _getUserFuture();
   }
 
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final dropdownkey = GlobalKey<FormState>();
-  String selectedGender;
+  _getUserFuture() async {
+    DatabaseHelper dbHelper = new DatabaseHelper();
+    SharedPreferences sp = await SharedPreferences.getInstance();
 
+    int currentUserID = sp.getInt("currentUserID");
+    return await dbHelper.getUserByID(currentUserID);
+  }
   Widget _buildGender() {
     return DropdownButtonFormField(
       decoration: InputDecoration(
