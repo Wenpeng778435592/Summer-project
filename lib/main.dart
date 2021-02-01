@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'User_input/GeneralInfo.dart';
 
-
 final databaseReference = FirebaseDatabase().reference().reference();
 
 Future<void> main() async {
