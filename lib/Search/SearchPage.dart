@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:algolia/algolia.dart';
 import 'package:my_diet_diary/AlgoliaApplication.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/Search/Add_Item.dart';
 
 class SearchBar extends StatefulWidget {
   SearchBar({Key key}) : super(key: key);
@@ -137,7 +138,11 @@ class DisplaySearchResult extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
-            Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
+              },
+                child: Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
             Divider(color: Colors.black,),
             SizedBox(height: 20)
           ]
