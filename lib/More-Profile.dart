@@ -124,7 +124,6 @@ class _Profile_SectionState extends State<Profile_Section> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined),
@@ -132,37 +131,29 @@ class _Profile_SectionState extends State<Profile_Section> {
                 Navigator.pop(context);
               },
             ),
-            Text('Profile',
-              style: generalStyle,),
-            IconButton(
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
-
-              },
+            Text(
+              'Profile',
+              style: generalStyle,
             ),
           ],
         ),
         backgroundColor: Colors.amber[800],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          
-          Container(
-            padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
-            child: RaisedButton(
-            child:Text('View User Information', style: generalStyle,),
-            color: Colors.amber,
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
-            },
-        ),
-          ),
-        ],
-
-      ),
-
+      body: Container(
+          child: FutureBuilder(
+              future: userFuture,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return Center(child: CircularProgressIndicator());
+                    break;
+                  default:
+                    if (snapshot.hasError)
+                      return Text("Error " + snapshot.error.toString());
+                    return buildProfile(snapshot.data);
+                }
+              })),
     );
   }
 }
