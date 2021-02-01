@@ -46,7 +46,7 @@ class User {
     height = map['height'];
     gender = map['gender'];
   }
-  
+
   bool isEmpty() {
     return id == null;
   }
