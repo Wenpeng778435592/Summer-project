@@ -86,32 +86,29 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
           ),
           Container(
             padding: EdgeInsets.all(10),
-              child: Form(
-                key:formkey,
-                child:SingleChildScrollView(
-                  child:_buildTargetWeight(),
+            child: Form(
+              key: formkey,
+              child: SingleChildScrollView(
+                child: _buildTargetWeight(),
+              ),
             ),
-           ),
           ),
-
           RaisedButton(
             child: Text(
               'Next',
               style: generalStyle,
             ),
-            onPressed: (){
-              if(formkey.currentState.validate()){
+            onPressed: () {
+              if (formkey.currentState.validate()) {
                 print('Nice you made it!');
-                Navigator.push(context, MaterialPageRoute(builder: (context) => TargetDays_Section(widget._currentUser, widget.BMR)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TargetDays_Section(
+                            widget._currentUser, widget.BMR)));
               }
             },
           ),
-
-
-
-
-
-
         ],
       ),
     );
