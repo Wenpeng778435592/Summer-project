@@ -37,15 +37,14 @@ class _GeneralInfo_SectionState extends State<GeneralInfo_Section> {
     SharedPreferences sp = await SharedPreferences.getInstance();
 
     int currentUserID = sp.getInt("currentUserID");
-    
-        if (currentUserID != null) {
+
+    if (currentUserID != null) {
       DatabaseHelper dbHelper = new DatabaseHelper();
       return await dbHelper.getUserByID(currentUserID);
     } else {
       return null;
     }
   }
-
 
   Widget _buildGender() {
     return DropdownButtonFormField(
@@ -75,6 +74,7 @@ class _GeneralInfo_SectionState extends State<GeneralInfo_Section> {
       },
     );
   }
+
   Widget _buildAge() {
     return TextFormField(
       initialValue: _currentUser.isEmpty() ? "" : _currentUser.age.toString(),
@@ -100,7 +100,7 @@ class _GeneralInfo_SectionState extends State<GeneralInfo_Section> {
       },
     );
   }
-  
+
   Widget _buildHeight() {
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -127,7 +127,7 @@ class _GeneralInfo_SectionState extends State<GeneralInfo_Section> {
           _currentUser.isEmpty() ? "" : _currentUser.height.toString(),
     );
   }
-  
+
   Widget _buildWeight() {
     return TextFormField(
       keyboardType: TextInputType.number,
