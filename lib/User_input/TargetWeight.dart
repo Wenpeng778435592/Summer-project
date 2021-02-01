@@ -36,10 +36,10 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
           widget._currentUser.targetWeight = int.parse(value);
         });
       },
-      validator: (value){
-        if(value.trim().isEmpty){
+      validator: (value) {
+        if (value.trim().isEmpty) {
           return 'Target weight is required.';
-        }else if(int.parse(value) >= widget._currentUser.weight){
+        } else if (int.parse(value) >= widget._currentUser.weight) {
           return 'Number is invalid.';
         }
       },
@@ -90,8 +90,8 @@ class _TargetWeight_SectionState extends State<TargetWeight_Section> {
                 key:formkey,
                 child:SingleChildScrollView(
                   child:_buildTargetWeight(),
-                ),
-              ),
+            ),
+           ),
           ),
 
           RaisedButton(
