@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:my_diet_diary/User_input/ActivityLevel.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/User_input/GeneralInfo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'DataObjects/DatabaseHelper.dart';
+import 'DataObjects/User.dart';
 import 'User_input/GeneralInfo.dart';
 
 class Profile_Section extends StatefulWidget {
