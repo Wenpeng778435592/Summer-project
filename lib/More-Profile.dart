@@ -14,17 +14,18 @@ class Profile_Section extends StatefulWidget {
 
 class _Profile_SectionState extends State<Profile_Section> {
   static const TextStyle generalStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const TextStyle labelStyle =
-  TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-  List<String> _gender = [
-    'Male',
-    'Female',
-    'Prefer not to say'
-  ];
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  static const TextStyle buttonStyle =
+      TextStyle(fontSize: 18, color: Colors.black);
+
+  Future userFuture;
+
   @override
-
-
+  void initState() {
+    super.initState();
+    userFuture = _getUserFuture();
+  }
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final dropdownkey = GlobalKey<FormState>();
