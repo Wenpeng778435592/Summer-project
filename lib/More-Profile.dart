@@ -35,6 +35,88 @@ class _Profile_SectionState extends State<Profile_Section> {
     return await dbHelper.getUserByID(currentUserID);
   }
 
+  Widget buildProfile(User user) {
+    return SingleChildScrollView(
+        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        child: ListView(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("Profile", style: generalStyle),
+                OutlinedButton(
+                    child: Text("Edit", style: buttonStyle),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GeneralInfo_Section()));
+                    })
+              ]),
+              SizedBox(
+                height: 40,
+              ),
+              Row(children: [Text("General Information", style: buttonStyle)]),
+              Divider(
+                height: 15,
+                thickness: 2,
+              ),
+              ListTile(
+                leading: const Icon(Icons.today),
+                title: const Text('Age'),
+                subtitle: new Text((user.age).toString()),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.tape),
+                title: const Text('Height'),
+                subtitle: new Text((user.height).toString() + " cm"),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.weight),
+                title: const Text('Weight'),
+                subtitle: new Text((user.weight).toString() + " kg"),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.venusMars),
+                title: const Text('Gender'),
+                subtitle: new Text(user.gender),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.chartLine),
+                title: const Text('Activity Level'),
+                subtitle: new Text(user.activityLevel),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(children: [Text("Goals", style: buttonStyle)]),
+              Divider(
+                height: 15,
+                thickness: 2,
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.bullseye),
+                title: const Text('Goal'),
+                subtitle: new Text((user.goal).toString()),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.utensils),
+                title: const Text('Calorie Goal'),
+                subtitle: new Text((user.calorieGoal).toString()),
+              ),
+              user.targetDays != null
+                  ? ListTile(
+                      leading: const Icon(FontAwesomeIcons.calendarDay),
+                      title: const Text('Target Days'),
+                      subtitle: new Text((user.targetDays).toString()),
+                    )
+                  : new Container(width: 0, height: 0),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.weight),
+                title: const Text('Weight Goal'),
+                subtitle: new Text((user.targetWeight).toString() + " kg"),
+              )
+            ]));
   }
 
   Widget build(BuildContext context) {
