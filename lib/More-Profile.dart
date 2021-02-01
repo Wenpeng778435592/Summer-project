@@ -127,7 +127,7 @@ class _Profile_SectionState extends State<Profile_Section> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
             ),
@@ -157,7 +157,3 @@ class _Profile_SectionState extends State<Profile_Section> {
     );
   }
 }
-
-
-
-
