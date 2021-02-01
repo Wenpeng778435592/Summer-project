@@ -235,8 +235,8 @@ class DatabaseHelper {
         user.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
     );
-    
-    return insertedID;
+
+   return insertedID;
   }
 
   Future<void> replaceUser(User user) async {
