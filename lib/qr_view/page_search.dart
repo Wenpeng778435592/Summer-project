@@ -114,7 +114,6 @@ class _NeteaseSearchPageState extends State<NeteaseSearchPage> {
         RaisedButton(
           child: Text("Submit"),
             onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section()));
             }),
 
     ],)),

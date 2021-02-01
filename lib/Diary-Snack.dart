@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import "package:my_diet_diary/qr_view/scan_view.dart";
-import "package:my_diet_diary/qr_view/page_search.dart";
+import 'package:my_diet_diary/Search/SearchPage.dart';
 
 class Snack_Section extends StatefulWidget {
   @override
@@ -78,7 +78,7 @@ class _Snack_SectionState extends State<Snack_Section> {
                 child: RaisedButton(
                   onPressed: (){
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
+                      MaterialPageRoute(builder: (context) => SearchBar()),
                     );
                   },
                   child:Row(
