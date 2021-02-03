@@ -20,6 +20,7 @@ class DatabaseHelper {
   static final _id = "id";
 
   static final _foodNameCol = "name";
+  static final _amountcol = "amount";
   static final _mealCol = "meal";
   static final _caloriesCol = "calories";
   static final _carbsCol = "carbs";
@@ -80,7 +81,7 @@ class DatabaseHelper {
         .execute(
         "CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT,"
             +
-            "$_mealCol TEXT, $_fatCol INTEGER, $_carbsCol INTEGER, $_proteinCol INTEGER, "
+            "$_mealCol TEXT, $_amountcol REAL, $_fatCol INTEGER, $_carbsCol INTEGER, $_proteinCol INTEGER, "
             + "$_caloriesCol INTEGER, $_userIDCol INTEGER, $_dateCol TEXT)"
     );
     //Create weight table
