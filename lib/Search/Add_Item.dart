@@ -161,7 +161,10 @@ class _AddItem_SectionState extends State<AddItem_Section> {
                                 ((num.parse(widget.carbohydrate) * amountFood).toStringAsFixed(1)).toString(),
                                 style: generalStyle,
                               )],),
-                              Column(children: [Text(
+                              Column(children: [
+                                // if(widget.fat == 'trace'){widget.fat = '0'}
+                                // else{}
+                                Text(
                                 ((num.parse(widget.fat) * amountFood).toStringAsFixed(1)).toString(),
                                 style: generalStyle,
                               )],),
