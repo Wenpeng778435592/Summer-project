@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/Search/Add_Item.dart';
+
 
 class NeteaseSearchPage extends StatefulWidget {
 
@@ -92,7 +94,9 @@ class _NeteaseSearchPageState extends State<NeteaseSearchPage> {
   }
 
   void _onFocusChanged() {
-    setState(() {});
+    setState(() {
+
+    });
   }
 
   List<Widget> buildActions(BuildContext context) {
@@ -107,7 +111,11 @@ class _NeteaseSearchPageState extends State<NeteaseSearchPage> {
     child:Column(
     mainAxisAlignment:MainAxisAlignment.center,
       children: [
-      Text("Cancel")
+        RaisedButton(
+          child: Text("Submit"),
+            onPressed: (){
+            }),
+
     ],)),
       )
       // query.isEmpty

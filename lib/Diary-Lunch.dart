@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import "package:my_diet_diary/qr_view/scan_view.dart";
-import "package:my_diet_diary/qr_view/page_search.dart";
+import 'package:my_diet_diary/Search/SearchPage.dart';
 
 class Lunch_Section extends StatefulWidget {
   @override
@@ -48,36 +48,55 @@ class _Lunch_SectionState extends State<Lunch_Section> {
       ),
       body: Column(
         children: <Widget>[
-          RaisedButton(
-            onPressed: (){},
-            child:Text('Food Recent',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
-          ),
-          RaisedButton(
-            onPressed: (){},
-            child:Text('My Food Recipes',
-              style: generalStyle,
-            ),
-            color: Colors.amber,
-          ),
-          RaisedButton(
-            onPressed: (){
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => NeteaseSearchPage()),
-              );
-            },
-            child:Row(
-              children: [
-                Text('Find a Food',
-                  style: generalStyle,
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('Food Recent',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
                 ),
-                Icon(Icons.search)
-              ],
-            ),
-            color: Colors.amber,
+              ),
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){},
+                  child:Text('My Food Recipes',
+                    style: generalStyle,
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchBar()),
+                    );
+                  },
+                  child:Row(
+
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
+          ),
+
+
         ],
       ),
     );
