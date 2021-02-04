@@ -7,6 +7,10 @@ import "package:my_diet_diary/qr_view/scan_view.dart";
 import 'package:my_diet_diary/Search/SearchPage.dart';
 
 class Breakfast_Section extends StatefulWidget {
+  //to send a message in -- don't need to change four dart files
+  final String title;
+
+  const Breakfast_Section({Key key, this.title}) : super(key: key);
   @override
   _Breakfast_SectionState createState() => _Breakfast_SectionState();
 }
@@ -32,6 +36,9 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
     20,
   ];
 
+  // controller show menu
+  bool showMenu = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +53,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 Navigator.pop(context);
               },
             ),
-            Text('Breakfast'),
+            Text(widget.title ?? 'Breakfast'),
             IconButton(
               icon: FaIcon(FontAwesomeIcons.barcode),
               onPressed: () async {
@@ -70,7 +77,11 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
             children: <Widget>[
               Expanded(
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      showMenu = true;
+                    });
+                  },
                   child: Text(
                     'Food Recent',
                     style: generalStyle,
@@ -115,46 +126,48 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               ),
             ],
           ),
-          Container(
-            color: Colors.amber,
-            height: 40,
-            child: Row(
-              children: [
-                Expanded(
-                  child: _item('Breakfast', onTap: () {
-                    setState(() {
-                      this.listIndex = 8;
-                      this.foodtype = 'Breakfast';
-                    });
-                  }),
-                ),
-                Expanded(
-                  child: _item('Lunch', onTap: () {
-                    setState(() {
-                      this.listIndex = 8;
-                      this.foodtype = 'Lunch';
-                    });
-                  }),
-                ),
-                Expanded(
-                  child: _item('Dinner', onTap: () {
-                    setState(() {
-                      this.listIndex = 8;
-                      this.foodtype = 'Dinner';
-                    });
-                  }),
-                ),
-                Expanded(
-                  child: _item('Snacks', onTap: () {
-                    setState(() {
-                      this.listIndex = 8;
-                      this.foodtype = 'Snacks';
-                    });
-                  }),
-                ),
-              ],
-            ),
-          ),
+          this.showMenu == true
+              ? Container(
+                  color: Colors.amber,
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _item('Breakfast', onTap: () {
+                          setState(() {
+                            this.listIndex = 8;
+                            this.foodtype = 'Breakfast';
+                          });
+                        }),
+                      ),
+                      Expanded(
+                        child: _item('Lunch', onTap: () {
+                          setState(() {
+                            this.listIndex = 8;
+                            this.foodtype = 'Lunch';
+                          });
+                        }),
+                      ),
+                      Expanded(
+                        child: _item('Dinner', onTap: () {
+                          setState(() {
+                            this.listIndex = 8;
+                            this.foodtype = 'Dinner';
+                          });
+                        }),
+                      ),
+                      Expanded(
+                        child: _item('Snacks', onTap: () {
+                          setState(() {
+                            this.listIndex = 8;
+                            this.foodtype = 'Snacks';
+                          });
+                        }),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
           Expanded(
             child: ListView.builder(
               itemCount: this.listIndex,
@@ -304,7 +317,6 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
     }
     return key;
   }
-
 
   //to get weeks
   String _weekStr(int i) {
