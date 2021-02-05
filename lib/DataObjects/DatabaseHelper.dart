@@ -81,8 +81,8 @@ class DatabaseHelper {
         .execute(
         "CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT,"
             +
-            "$_mealCol TEXT, $_amountcol REAL, $_fatCol INTEGER, $_carbsCol INTEGER, $_proteinCol INTEGER, "
-            + "$_caloriesCol INTEGER, $_userIDCol INTEGER, $_dateCol TEXT)"
+            "$_mealCol TEXT, $_amountcol REAL, $_fatCol REAL, $_carbsCol REAL, $_proteinCol REAL, "
+            + "$_caloriesCol REAL, $_userIDCol INTEGER, $_dateCol TEXT)"
     );
     //Create weight table
     await db
@@ -154,6 +154,7 @@ class DatabaseHelper {
         foodEntry.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace
     );
+    print('FoodEntry working in dbhelper');
   }
 
   Future<void> deleteFoodEntry(int id) async {

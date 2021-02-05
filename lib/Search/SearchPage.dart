@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_diary/Search/Add_Item.dart';
 
 class SearchBar extends StatefulWidget {
-  SearchBar({Key key}) : super(key: key);
+  final String meal;
+  SearchBar(this.meal, {Key key}) : super(key: key);
 
   @override
   _SearchBarState createState() => _SearchBarState();
+
 }
 
 class _SearchBarState extends State<SearchBar> {
@@ -30,7 +32,6 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -92,6 +93,7 @@ class _SearchBarState extends State<SearchBar> {
                                   delegate: SliverChildBuilderDelegate(
                                         ( context,  index) {
                                       return _searchTerm.length > 0 ? DisplaySearchResult(
+                                        widget.meal,
                                         objectID: currSearchStuff[index].data["objectID"],
                                         short_names: currSearchStuff[index].data["short_names"],
                                         carbohydrate: currSearchStuff[index].data["carbohydrate(g)"],
@@ -120,6 +122,7 @@ class _SearchBarState extends State<SearchBar> {
 }
 
 class DisplaySearchResult extends StatelessWidget {
+  final String meal;
   final String objectID;
   final String short_names;
   final String carbohydrate;
@@ -129,7 +132,7 @@ class DisplaySearchResult extends StatelessWidget {
   final String protein;
   final String serv;
 
-  DisplaySearchResult({Key key, this.objectID, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv}) : super(key: key);
+  DisplaySearchResult(this.meal, {Key key, this.objectID, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +143,7 @@ class DisplaySearchResult extends StatelessWidget {
 
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.meal, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
               },
                 child: Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
             Divider(color: Colors.black,),

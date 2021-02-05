@@ -1,15 +1,14 @@
-import 'Meal.dart';
 
 class FoodEntry {
   int id;
   int userID;
-  int carbs;
-  int protein;
-  int fat;
-  int calories;
+  num carbs;
+  num protein;
+  num fat;
+  num calories;
   String name;
   String date;
-  Meal meal;
+  String meal;
   num amount;
 
   FoodEntry(this.userID, this.carbs, this.protein, this.fat,
@@ -24,7 +23,7 @@ class FoodEntry {
       'calories': calories,
       'name': name,
       'date':date,
-      'meal': meal.value,
+      'meal': meal,
       'id': id,
       'amount': amount,
     };
@@ -41,10 +40,10 @@ class FoodEntry {
     name = map['name'];
     date = map['date'];
     amount = map['amount'];
-    meal = Meal.values.firstWhere((e) => e.toString() == 'Meal.' + map['meal']);
+    meal = map['meal'];
   }
 
   String toString(){
-    return this.name + " " + this.date + " " + this.meal.value;
+    return this.name + " " + this.date + " " + this.meal;
   }
 }

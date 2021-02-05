@@ -78,7 +78,7 @@ class _Snack_SectionState extends State<Snack_Section> {
                 child: RaisedButton(
                   onPressed: (){
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchBar()),
+                      MaterialPageRoute(builder: (context) => SearchBar('snack')),
                     );
                   },
                   child:Row(
