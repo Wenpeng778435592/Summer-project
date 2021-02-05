@@ -237,6 +237,7 @@ class _AddItem_SectionState extends State<AddItem_Section> {
                       print(DateTime.now().toString());
                       print(this.amountFood*100);
 
+                      // _foodEntry = new FoodEntry(1, 1, 1, 1, 1, 'test food', 'lunch', 'now', 1);
                       _foodEntry = new FoodEntry(currentUserID, num.parse(widget.carbohydrate) * amountFood, num.parse(widget.protein) * amountFood, num.parse(widget.fat) * amountFood, num.parse(widget.energy) * amountFood, widget.short_names, widget.meal, DateTime.now().toString(), this.amountFood*100);
                       dbHelper.addFoodEntry(_foodEntry);
                       print('FoodEntry working');
