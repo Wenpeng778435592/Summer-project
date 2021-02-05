@@ -109,7 +109,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchBar()),
+                      MaterialPageRoute(builder: (context) => SearchBar('breakfast')),
                     );
                   },
                   child: Row(
