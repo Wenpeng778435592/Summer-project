@@ -5,6 +5,8 @@ import 'package:permission_handler/permission_handler.dart';
 import "package:my_diet_diary/qr_view/scan_view.dart";
 import 'package:my_diet_diary/Search/SearchPage.dart';
 
+
+
 class Breakfast_Section extends StatefulWidget {
   @override
   _Breakfast_SectionState createState() => _Breakfast_SectionState();
@@ -80,7 +82,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 child: RaisedButton(
                   onPressed: (){
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchBar()),
+                      MaterialPageRoute(builder: (context) => SearchBar('breakfast')),
                     );
                   },
                   child:Row(
