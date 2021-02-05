@@ -79,7 +79,7 @@ class _Dinner_SectionState extends State<Dinner_Section> {
                 child: RaisedButton(
                   onPressed: (){
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchBar()),
+                      MaterialPageRoute(builder: (context) => SearchBar('dinner')),
                     );
                   },
                   child:Row(
