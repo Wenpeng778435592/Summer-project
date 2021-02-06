@@ -167,6 +167,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 13a865a4b85897462b930eb683bda8f52583713f
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+
   flutter_barcode_scanner: fc42adac0732eca7bd9d3d676b215bce5903f269
   flutter_qr_reader: 254fd9eea45a65ef461e050d6607daf9cfb753e8
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
