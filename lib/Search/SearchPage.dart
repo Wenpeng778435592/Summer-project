@@ -2,12 +2,15 @@ import 'dart:async';
 import 'package:algolia/algolia.dart';
 import 'package:my_diet_diary/AlgoliaApplication.dart';
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/Search/Add_Item.dart';
 
 class SearchBar extends StatefulWidget {
-  SearchBar({Key key}) : super(key: key);
+  final String meal;
+  SearchBar(this.meal, {Key key}) : super(key: key);
 
   @override
   _SearchBarState createState() => _SearchBarState();
+
 }
 
 class _SearchBarState extends State<SearchBar> {
@@ -29,7 +32,6 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -55,7 +57,10 @@ class _SearchBarState extends State<SearchBar> {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
               children:<Widget>[
+                Text('Search',
+                style: generalStyle,),
                 TextField(
                     onChanged: (val) {
                       setState(() {
@@ -66,7 +71,7 @@ class _SearchBarState extends State<SearchBar> {
                     decoration: new InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Search ...',
-                        hintStyle: TextStyle(color: Colors.black),
+                        hintStyle: labelStyle,
                         prefixIcon: const Icon(Icons.search, color: Colors.black
                         ))),
                 StreamBuilder<List<AlgoliaObjectSnapshot>>(
@@ -87,7 +92,17 @@ class _SearchBarState extends State<SearchBar> {
                                 SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                         ( context,  index) {
-                                      return _searchTerm.length > 0 ? DisplaySearchResult(artDes: currSearchStuff[index].data["artShowDescription"], artistName: currSearchStuff[index].data["artistName"], genre: currSearchStuff[index].data["genre"],) :
+                                      return _searchTerm.length > 0 ? DisplaySearchResult(
+                                        widget.meal,
+                                        objectID: currSearchStuff[index].data["objectID"],
+                                        short_names: currSearchStuff[index].data["short_names"],
+                                        carbohydrate: currSearchStuff[index].data["carbohydrate(g)"],
+                                        energy: currSearchStuff[index].data["energy(kJ)"],
+                                        fat: currSearchStuff[index].data["fat(g)"],
+                                        id: currSearchStuff[index].data["id"],
+                                        protein: currSearchStuff[index].data["protein(g)"],
+                                        serv: currSearchStuff[index].data["serv(g)"],
+                                      ) :
                                       Container();
 
                                     },
@@ -107,22 +122,34 @@ class _SearchBarState extends State<SearchBar> {
 }
 
 class DisplaySearchResult extends StatelessWidget {
-  final String artDes;
-  final String artistName;
-  final String genre;
+  final String meal;
+  final String objectID;
+  final String short_names;
+  final String carbohydrate;
+  final String energy;
+  final String fat;
+  final String id;
+  final String protein;
+  final String serv;
 
-  DisplaySearchResult({Key key, this.artistName, this.artDes, this.genre}) : super(key: key);
+  DisplaySearchResult(this.meal, {Key key, this.objectID, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          Text(artDes ?? "", style: TextStyle(color: Colors.black ),),
-          Text(artistName ?? "", style: TextStyle(color: Colors.black ),),
-          Text(genre ?? "", style: TextStyle(color: Colors.black ),),
-          Divider(color: Colors.black,),
-          SizedBox(height: 20)
-        ]
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.meal, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
+              },
+                child: Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
+            Divider(color: Colors.black,),
+            SizedBox(height: 20)
+          ]
+      ),
     );
   }
 }

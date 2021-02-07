@@ -20,6 +20,7 @@ class DatabaseHelper {
   static final _id = "id";
 
   static final _foodNameCol = "name";
+  static final _amountcol = "amount";
   static final _mealCol = "meal";
   static final _caloriesCol = "calories";
   static final _carbsCol = "carbs";
@@ -73,9 +74,13 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
     //Create food table
-    await db.execute("CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT," +
-        "$_mealCol TEXT, $_fatCol INTEGER, $_carbsCol INTEGER, $_proteinCol INTEGER, " +
-        "$_caloriesCol INTEGER, $_userIDCol INTEGER, $_dateCol TEXT)");
+    await db
+        .execute(
+        "CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT,"
+            +
+            "$_mealCol TEXT, $_amountcol REAL, $_fatCol REAL, $_carbsCol REAL, $_proteinCol REAL, "
+            + "$_caloriesCol REAL, $_userIDCol INTEGER, $_dateCol TEXT)"
+    );
 
     //Create weight table
     await db.execute("CREATE TABLE $_weightHistoryTable ($_weightCol REAL," +
@@ -129,7 +134,11 @@ class DatabaseHelper {
   Future<void> addFoodEntry(FoodEntry foodEntry) async {
     Database db = await this.database;
 
-    await db.insert(_foodHistoryTable, foodEntry.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+        _foodHistoryTable,
+        foodEntry.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace
+    );
   }
 
   Future<void> deleteFoodEntry(int id) async {
