@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -74,13 +75,9 @@ class DatabaseHelper {
 
   void _createDb(Database db, int newVersion) async {
     //Create food table
-    await db
-        .execute(
-        "CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT,"
-            +
-            "$_mealCol TEXT, $_amountcol REAL, $_fatCol REAL, $_carbsCol REAL, $_proteinCol REAL, "
-            + "$_caloriesCol REAL, $_userIDCol INTEGER, $_dateCol TEXT)"
-    );
+    await db.execute("CREATE TABLE $_foodHistoryTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_foodNameCol TEXT," +
+        "$_mealCol TEXT, $_amountcol REAL, $_fatCol REAL, $_carbsCol REAL, $_proteinCol REAL, " +
+        "$_caloriesCol REAL, $_userIDCol INTEGER, $_dateCol TEXT)");
 
     //Create weight table
     await db.execute("CREATE TABLE $_weightHistoryTable ($_weightCol REAL," +
@@ -123,7 +120,6 @@ class DatabaseHelper {
     String day = date.toString().split(" ")[0];
 
     String meal = mealType.value;
-    print("meal " + meal);
 
     List<Map> queryResults =
         await db.query(_foodHistoryTable, where: '$_dateCol LIKE ? AND $_mealCol = ?', whereArgs: ['%$day%', meal]);
@@ -134,11 +130,7 @@ class DatabaseHelper {
   Future<void> addFoodEntry(FoodEntry foodEntry) async {
     Database db = await this.database;
 
-    await db.insert(
-        _foodHistoryTable,
-        foodEntry.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace
-    );
+    await db.insert(_foodHistoryTable, foodEntry.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<void> deleteFoodEntry(int id) async {
@@ -152,6 +144,17 @@ class DatabaseHelper {
 
     List<Map> result = await db.query(_foodHistoryTable, where: '$_id = ?', whereArgs: [id]);
     return result.isNotEmpty ? FoodEntry.fromMap(result.first) : Null;
+  }
+
+  // Gets entries for a range (inclusive)
+  Future<List<FoodEntry>> getFoodEntriesBetweenDates(int userID, DateTime startDate, DateTime endDate) async {
+    Database db = await this.database;
+
+    List<Map> result = await db.query(_foodHistoryTable,
+        where: '$_dateCol BETWEEN ? AND ?',
+        whereArgs: [new DateFormat('yyyy-MM-dd').format(startDate), new DateFormat('yyyy-MM-dd').format(endDate)]);
+
+    return _convertToFoodObjectList(result);
   }
 
   //Private function used by helper functions to convert a query result into
@@ -203,7 +206,7 @@ class DatabaseHelper {
     Database db = await this.database;
 
     List<Map> result = await db.query(_userInfoTable, where: '$_id = ?', whereArgs: [id]);
-    return result.isNotEmpty ? User.fromMap(result.first) : Null;
+    return User.fromMap(result.first);
   }
 
   Future<int> addUser(User user) async {

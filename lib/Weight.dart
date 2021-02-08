@@ -148,13 +148,6 @@ class _Weight_sectionState extends State<Weight_section> {
     return FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: false,
-//          getTitles: (value) {
-//            final DateTime date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
-//            return DateFormat.MMMd().format(date);
-//          },
-//          margin: 15,
-//          interval: _maxX - _minX,
-//          reservedSize: 10,
         ),
         leftTitles: SideTitles(
           showTitles: true,
