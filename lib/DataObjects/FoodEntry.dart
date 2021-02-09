@@ -46,4 +46,5 @@ class FoodEntry {
   String toString(){
     return this.name + " " + this.date + " " + this.meal;
   }
+
 }
