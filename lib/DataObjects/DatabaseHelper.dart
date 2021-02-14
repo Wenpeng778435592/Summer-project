@@ -9,6 +9,7 @@ import '../DataObjects/FoodEntry.dart';
 import '../DataObjects/Meal.dart';
 import '../DataObjects/User.dart';
 import '../DataObjects/WeightEntry.dart';
+import 'MyFoodEntry.dart';
 
 class DatabaseHelper {
   static final _dbName = "LocalData.db";
@@ -17,6 +18,7 @@ class DatabaseHelper {
   static final _foodHistoryTable = "FoodHistory";
   static final _weightHistoryTable = "WeightHistory";
   static final _userInfoTable = "UserInformation";
+  static final _myFoodTable = "MyFood";
 
   static final _id = "id";
 
@@ -28,6 +30,7 @@ class DatabaseHelper {
   static final _fatCol = "fat";
   static final _proteinCol = "protein";
   static final _dateCol = "date";
+  static final _measureCol = "measure";
 
   static final _weightCol = "weight";
   static final _userIDCol = "userID";
@@ -89,13 +92,17 @@ class DatabaseHelper {
         "$_userHeightCol INTEGER, $_userWeightCol INTEGER, $_userTargetWeightCol INTEGER,$_userGenderCol TEXT," +
         "$_userNameCol TEXT, $_userGoal TEXT, $_userActivityLevel INTEGER, $_userCalorieGoal INTEGER," +
         "$_userDailyIntake INTEGER, $_userTargetDays INTEGER)");
+
+    //Create my food table
+    await db.execute("CREATE TABLE $_myFoodTable ($_id INTEGER PRIMARY KEY AUTOINCREMENT, $_carbsCol REAL," +
+        "$_fatCol REAL, $_proteinCol REAL, $_foodNameCol STRING, $_measureCol REAL, $_userIDCol INTEGER, $_caloriesCol REAL)");
   }
 
 /*
-  Helper functions
+  -----------------------------
+  Food History Helper Functions
+  -----------------------------
  */
-
-  //Food history functions
 
   Future<List<FoodEntry>> getAllFoodHistory() async {
     final Database db = await this.database;
@@ -170,7 +177,11 @@ class DatabaseHelper {
     return foodEntries;
   }
 
-  // Weight History functions
+/*
+  -------------------------------
+  Weight History Helper Functions
+  -------------------------------
+ */
   Future<List<WeightEntry>> getWeightHistoryForUser(int id) async {
     Database db = await this.database;
 
@@ -201,7 +212,11 @@ class DatabaseHelper {
     await db.delete(_weightHistoryTable, where: '$_id = ?', whereArgs: [id]);
   }
 
-// User information functions
+/*
+  ---------------------------------
+  User Information Helper Functions
+  ---------------------------------
+ */
   Future<User> getUserByID(int id) async {
     Database db = await this.database;
 
@@ -235,5 +250,33 @@ class DatabaseHelper {
     });
 
     return users;
+  }
+
+/*
+  -------------------------------
+  My Food Helper Functions
+  -------------------------------
+ */
+
+  Future<int> addMyFood(MyFoodEntry myFoodEntry) async {
+    Database db = await this.database;
+
+    int insertedID = await db.insert(_myFoodTable, myFoodEntry.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+
+    return insertedID;
+  }
+
+  Future<List<MyFoodEntry>> getMyFoods() async {
+    Database db = await this.database;
+
+    List<Map> queryResults = await db.query('SELECT * FROM $_myFoodTable');
+
+    List<MyFoodEntry> myFoodEntries = new List();
+    queryResults.forEach((result) {
+      MyFoodEntry myFood = MyFoodEntry.fromMap(result);
+      myFoodEntries.add(myFood);
+    });
+
+    return myFoodEntries;
   }
 }
