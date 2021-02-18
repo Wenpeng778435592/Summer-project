@@ -223,6 +223,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                           '${foodEntry.protein}',
                           '100', //serv is 100g
                         ),
+
                       ),
                     );
                   },
