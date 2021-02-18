@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
+import 'package:my_diet_diary/DataObjects/Meal.dart';
 import 'package:my_diet_diary/Search/Add_Item.dart';
+import 'package:my_diet_diary/qr_view/BarcodeScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
-import "package:my_diet_diary/qr_view/scan_view.dart";
 import 'package:my_diet_diary/Search/SearchPage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'DataObjects/FoodEntry.dart';
+import 'package:intl/intl.dart';
 
 class Breakfast_Section extends StatefulWidget {
   //to send a message in -- don't need to change four dart files
@@ -24,20 +30,30 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
   var foodtype = "";
   var listIndex = 0;
 
-  final foods = [
-    "Frenchfries",
-    'Orange',
-    'Chocolate',
-  ];
+  // final foods = [
+  //   "Frenchfries",
+  //   'Orange',
+  //   'Chocolate',
+  // ];
+  //
+  // final nums = [
+  //   300,
+  //   100,
+  //   20,
+  // ];
 
-  final nums = [
-    300,
-    100,
-    20,
-  ];
+  List<FoodEntry> foodSource = List();
 
   // controller show menu
   bool showMenu = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //getFoodHistoryForDay
+    DatabaseHelper().getFoodHistoryForDay(null, null);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +78,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 if (!_hasPermission.isGranted) return;
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ScanView()),
+                  MaterialPageRoute(builder: (context) => BarcodeScanPage()),
                 );
               },
             ),
@@ -109,7 +125,8 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SearchBar('breakfast')),
+                      MaterialPageRoute(
+                          builder: (context) => SearchBar('breakfast')),
                     );
                   },
                   child: Row(
@@ -134,34 +151,38 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                     children: [
                       Expanded(
                         child: _item('Breakfast', onTap: () {
-                          setState(() {
-                            this.listIndex = 8;
-                            this.foodtype = 'Breakfast';
-                          });
+                          // setState(() {
+                          //   this.listIndex = 8;
+                          //   this.foodtype = 'Breakfast';
+                          // });
+                          _getSourceFromDB(Meal.breakfast);
                         }),
                       ),
                       Expanded(
                         child: _item('Lunch', onTap: () {
-                          setState(() {
-                            this.listIndex = 8;
-                            this.foodtype = 'Lunch';
-                          });
+                          // setState(() {
+                          //   this.listIndex = 8;
+                          //   this.foodtype = 'Lunch';
+                          // });
+                          _getSourceFromDB(Meal.lunch);
                         }),
                       ),
                       Expanded(
                         child: _item('Dinner', onTap: () {
-                          setState(() {
-                            this.listIndex = 8;
-                            this.foodtype = 'Dinner';
-                          });
+                          // setState(() {
+                          //   this.listIndex = 8;
+                          //   this.foodtype = 'Dinner';
+                          // });
+                          _getSourceFromDB(Meal.dinner);
                         }),
                       ),
                       Expanded(
                         child: _item('Snacks', onTap: () {
-                          setState(() {
-                            this.listIndex = 8;
-                            this.foodtype = 'Snacks';
-                          });
+                          // setState(() {
+                          //   this.listIndex = 8;
+                          //   this.foodtype = 'Snacks';
+                          // });
+                          _getSourceFromDB(Meal.snack);
                         }),
                       ),
                     ],
@@ -170,20 +191,38 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               : Container(),
           Expanded(
             child: ListView.builder(
-              itemCount: this.listIndex,
+              itemCount: foodSource.length,
               itemBuilder: (BuildContext context, int index) {
-                String name = this.foods[index % 3];
-                int num = this.nums[index % 3];
+                // String name = this.foods[index % 3];
+                // int num = this.nums[index % 3];
+                FoodEntry foodEntry = foodSource[index];
                 return _listItem(
-                  type: this.foodtype,
-                  date: _dateStr(index),
-                  foodName: '$name ${num}g',
+                  type: foodEntry.meal,
+                  date: () {
+                    DateTime date = DateTime.tryParse(foodEntry.date);
+                    if (date != null) {
+                      DateFormat df = DateFormat("yyyy-MM-dd HH:mm:ss");
+                      String v = df.format(date);
+                      return v;
+                    } else {
+                      return '';
+                    }
+                  }(),
+                  foodName: '${foodEntry.name}${foodEntry.amount}g',
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            AddItem_Section("1", "2", "3", "4", "5", "6", "7"),
+                        builder: (context) => AddItem_Section(
+                          foodEntry.meal,
+                          foodEntry.name,
+                          '${foodEntry.carbs}',
+                          '${foodEntry.calories}',
+                          '${foodEntry.fat}',
+                          '${foodEntry.id}',
+                          '${foodEntry.protein}',
+                          '100', //serv is 100g
+                        ),
                       ),
                     );
                   },
@@ -252,6 +291,23 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
         ),
       ),
     );
+  }
+
+  //get from database //Classified data acquisition
+  _getSourceFromDB(Meal meal) async {
+    List<FoodEntry> allSource = List();
+    var now = DateTime.now();
+    for (var i = 0; i < 8; i++) {
+      //Build a date condition that loops through the data for each day
+      Duration dayD = Duration(days: i);
+      var date = now.subtract(dayD);
+      List<FoodEntry> temp = await DatabaseHelper().getMealForDay(date, meal);
+      allSource.addAll(temp); //Summarize the acquired data
+    }
+
+    setState(() {
+      foodSource = allSource;
+    });
   }
 
   //to return String time according to line number
