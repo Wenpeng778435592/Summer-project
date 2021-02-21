@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'DataObjects/DatabaseHelper.dart';
 import 'DataObjects/FoodDayData.dart';
 import 'DataObjects/FoodEntry.dart';
+import 'DataObjects/User.dart';
 
 class Report_Section extends StatefulWidget {
   @override
@@ -26,35 +27,29 @@ class _Report_SectionState extends State<Report_Section> {
   DatabaseHelper dbHelper = new DatabaseHelper();
 
   List<FoodEntry> _currentWeekFoodEntries = new List<FoodEntry>();
-  List<FoodEntry> _foodEntriesToday = new List<FoodEntry>();
 
   Map _currentWeekSummaryData = LinkedHashMap<String, FoodDayData>();
-
-  DateTime _currentStartDate;
-  DateTime _currentEndDate;
-
-  int _currentUserID;
-  int _currentUserCalorieGoal;
 
   @override
   void initState() {
     super.initState();
-    _getFutures();
   }
 
-  _getFutures() async {
+  Future<User> getUser() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    _currentUserID = sp.getInt("currentUserID");
-    _currentUserCalorieGoal = (await dbHelper.getUserByID(_currentUserID)).calorieGoal;
 
-    _currentWeekFoodEntries = await _getFoodEntriesForWeek(DateTime.now());
-    _foodEntriesToday = await _getFoodEntriesForDay(DateTime.now(), _currentUserID);
+    return dbHelper.getUserByID(sp.getInt("currentUserID"));
+  }
 
-    _currentWeekSummaryData = _getCalorieSummaryData();
+  Future<List<FoodEntry>> getFoodEntries() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
 
-    print(_getDailyCalorieAverageForWeek());
+    var tomorrow = DateTime.now().add(Duration(days: 1));
+    var endOfToday = DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
 
-    setState(() {});
+    print(endOfToday.toString());
+
+    return _getFoodEntriesForWeek(endOfToday, sp.getInt("currentUserID"));
   }
 
   int _getDailyCalorieAverageForWeek() {
@@ -74,44 +69,30 @@ class _Report_SectionState extends State<Report_Section> {
   double _getCaloriesForDay() {
     double totalCalories = 0;
 
-    _foodEntriesToday.forEach((foodEntry) {
-      totalCalories = totalCalories + foodEntry.calories;
+    String today = DateTime.now().toString().split(" ")[0];
+
+    _currentWeekFoodEntries.forEach((foodEntry) {
+      String foodEntryDate = foodEntry.date.toString().split(" ")[0];
+
+      if (foodEntryDate == today) {
+        totalCalories = totalCalories + foodEntry.calories;
+      }
     });
 
     return totalCalories;
   }
 
-  Future<List<FoodEntry>> _getFoodEntriesForWeek(DateTime startDate) async {
-    DateTime prevWeekDate = startDate.subtract(Duration(days: 6));
-    return await dbHelper.getFoodEntriesBetweenDates(_currentUserID, prevWeekDate, startDate);
+  Future<List<FoodEntry>> _getFoodEntriesForWeek(DateTime startDate, int id) async {
+    DateTime prevWeekDate = startDate.subtract(Duration(days: 7));
+    return await dbHelper.getFoodEntriesBetweenDates(id, prevWeekDate, startDate);
   }
-
-  Future<List<FoodEntry>> _getFoodEntriesForDay(DateTime startDate, int userID) async {
-    return await dbHelper.getFoodHistoryForDay(startDate, _currentUserID);
-  }
-
-//  _getFoodEntryStartDate(String direction){
-//    switch (direction){
-//
-//      case "Forward": {
-//        _currentStartDate = _currentEndDate.add(Duration(days:1)));
-//        break;
-//      }
-//      case "Backward": {
-//        _currentStartDate = _getFoodEntriesForWeek(_currentStartDate.subtract(Duration(days:7)));
-//        break;
-//      }
-//    }
-//  }
 
   _getCalorieSummaryData() {
     DateTime currentDate = DateTime.now();
     Map currentWeekSummaryData = LinkedHashMap<String, FoodDayData>();
 
-    setState(() => {});
-
     currentWeekSummaryData = {
-      new DateFormat('yyyy-MM-dd').format(DateTime.now()): FoodDayData(0, 0, 0, 0),
+      new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 6))): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 5))): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 4))): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 3))): FoodDayData(0, 0, 0, 0),
@@ -128,8 +109,6 @@ class _Report_SectionState extends State<Report_Section> {
       currentDataForDate.fat += foodEntry.fat;
       currentDataForDate.protein += foodEntry.protein;
       currentDataForDate.carbs += foodEntry.carbs;
-
-      print(foodEntryDateFormatted + " " + currentDataForDate.toString());
     });
 
     return currentWeekSummaryData;
@@ -248,98 +227,114 @@ class _Report_SectionState extends State<Report_Section> {
         backgroundColor: Colors.amber[800],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_back),
-                      iconSize: 55,
-                      color: Colors.amber,
+        child: FutureBuilder(
+            future: Future.wait([getUser(), getFoodEntries()]),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return Center(child: CircularProgressIndicator());
+                  break;
+                default:
+                  User currentUser = snapshot.data[0];
+                  _currentWeekFoodEntries = snapshot.data[1];
+
+                  _currentWeekSummaryData = _getCalorieSummaryData();
+
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.arrow_back),
+                                iconSize: 55,
+                                color: Colors.amber,
+                              ),
+                              RaisedButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'This Week',
+                                  style: boldStyle,
+                                ),
+                                color: Colors.amber,
+                                shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.arrow_forward),
+                                iconSize: 55,
+                                color: Colors.amber,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                'Calories Today',
+                                style: boldStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 8, 0, 10),
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                _getCaloriesForDay().toString(),
+                                style: normalStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Daily Average: ',
+                                style: boldStyle,
+                              ),
+                              Text(
+                                _getDailyCalorieAverageForWeek().toString(),
+                                style: normalStyle,
+                              ),
+                              Text(
+                                'Goal: ',
+                                style: boldStyle,
+                              ),
+                              Text(
+                                currentUser.calorieGoal.toString(),
+                                style: normalStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                            width: double.infinity,
+                            child: BarChart(BarChartData(
+                                maxY: _getMaxY(),
+                                barGroups: _barGroups(),
+                                titlesData: _titlesData(),
+                                barTouchData: _barTouchData(),
+                                borderData: _borderData())))
+                      ],
                     ),
-                    RaisedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'This Week',
-                        style: boldStyle,
-                      ),
-                      color: Colors.amber,
-                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30)),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.arrow_forward),
-                      iconSize: 55,
-                      color: Colors.amber,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'Calories Today',
-                      style: boldStyle,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 10),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      _getCaloriesForDay().toString(),
-                      style: normalStyle,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Daily Average: ',
-                      style: boldStyle,
-                    ),
-                    Text(
-                      _getDailyCalorieAverageForWeek().toString(),
-                      style: normalStyle,
-                    ),
-                    Text(
-                      'Goal: ',
-                      style: boldStyle,
-                    ),
-                    Text(
-                      _currentUserCalorieGoal.toString(),
-                      style: normalStyle,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                  width: double.infinity,
-                  child: BarChart(BarChartData(
-                      maxY: _getMaxY(),
-                      barGroups: _barGroups(),
-                      titlesData: _titlesData(),
-                      barTouchData: _barTouchData(),
-                      borderData: _borderData())))
-            ],
-          ),
-        ),
+                  );
+              }
+            }),
       ),
     );
   }
