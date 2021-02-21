@@ -30,6 +30,9 @@ class _Report_SectionState extends State<Report_Section> {
 
   Map _currentWeekSummaryData = LinkedHashMap<String, FoodDayData>();
 
+  DateTime _currentStartDate;
+  DateTime _currentEndDate;
+
   int _currentUserID;
   int _currentUserCalorieGoal;
 
@@ -87,12 +90,28 @@ class _Report_SectionState extends State<Report_Section> {
     return await dbHelper.getFoodHistoryForDay(startDate, _currentUserID);
   }
 
+//  _getFoodEntryStartDate(String direction){
+//    switch (direction){
+//
+//      case "Forward": {
+//        _currentStartDate = _currentEndDate.add(Duration(days:1)));
+//        break;
+//      }
+//      case "Backward": {
+//        _currentStartDate = _getFoodEntriesForWeek(_currentStartDate.subtract(Duration(days:7)));
+//        break;
+//      }
+//    }
+//  }
+
   _getCalorieSummaryData() {
     DateTime currentDate = DateTime.now();
     Map currentWeekSummaryData = LinkedHashMap<String, FoodDayData>();
 
+    setState(() => {});
+
     currentWeekSummaryData = {
-      new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 6))): FoodDayData(0, 0, 0, 0),
+      new DateFormat('yyyy-MM-dd').format(DateTime.now()): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 5))): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 4))): FoodDayData(0, 0, 0, 0),
       new DateFormat('yyyy-MM-dd').format(currentDate.subtract(Duration(days: 3))): FoodDayData(0, 0, 0, 0),
