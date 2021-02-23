@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_diet_diary/qr_view/BarcodeScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:my_diet_diary/Search/SearchPage.dart';
+import 'package:my_diet_diary/Search/MyFoodSearchPage.dart';
 
 class Dinner_Section extends StatefulWidget {
   @override
@@ -62,8 +63,13 @@ class _Dinner_SectionState extends State<Dinner_Section> {
               ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('My Food Recipes',
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('dinner')),
+                    );
+                  },
+                  child:Text('My Food List',
                     style: generalStyle,
                   ),
                   color: Colors.amber,

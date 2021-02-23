@@ -153,9 +153,8 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Breakfast_Section(
-                                    title: 'Lunch',
-                                  )),
+                              builder: (context) => Lunch_Section(
+                              )),
                         );
                       },
                       shape: RoundedRectangleBorder(
@@ -179,8 +178,8 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Breakfast_Section(
-                                    title: 'Dinner',
+                              builder: (context) => Dinner_Section(
+
                                   )),
                         );
                       },
@@ -205,8 +204,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Breakfast_Section(
-                                    title: 'Snacks',
+                              builder: (context) => Snack_Section(
                                   )),
                         );
                       },
