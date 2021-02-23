@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:my_diet_diary/Search/SearchPage.dart';
+import 'package:my_diet_diary/Search/MyFoodSearchPage.dart';
+
+import 'qr_view/BarcodeScanPage.dart';
 
 class Snack_Section extends StatefulWidget {
   @override
@@ -31,7 +36,13 @@ class _Snack_SectionState extends State<Snack_Section> {
             Text('Snacks'),
             IconButton(
               icon:FaIcon(FontAwesomeIcons.barcode),
-              onPressed: (){},
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BarcodeScanPage()),
+                );
+              },
             ),
           ],
         ),
@@ -53,8 +64,13 @@ class _Snack_SectionState extends State<Snack_Section> {
               ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('My Food Recipes',
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('snack')),
+                    );
+                  },
+                  child:Text('My Food List',
                     style: generalStyle,
                   ),
                   color: Colors.amber,
@@ -67,9 +83,19 @@ class _Snack_SectionState extends State<Snack_Section> {
             children: <Widget>[
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('Find a Food',
-                    style: generalStyle,
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchBar('snack')),
+                    );
+                  },
+                  child:Row(
+
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
                   ),
                   color: Colors.amber,
                 ),

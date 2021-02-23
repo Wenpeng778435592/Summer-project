@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_diet_diary/qr_view/BarcodeScanPage.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:my_diet_diary/Search/SearchPage.dart';
+import 'package:my_diet_diary/Search/MyFoodSearchPage.dart';
 
 class Dinner_Section extends StatefulWidget {
   @override
@@ -31,7 +35,13 @@ class _Dinner_SectionState extends State<Dinner_Section> {
             Text('Dinner'),
             IconButton(
               icon:FaIcon(FontAwesomeIcons.barcode),
-              onPressed: (){},
+              onPressed: ()async {
+                PermissionStatus _hasPermission = await Permission.camera.request();
+                if(!_hasPermission.isGranted) return;
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BarcodeScanPage()),
+                );
+              },
             ),
           ],
         ),
@@ -53,8 +63,13 @@ class _Dinner_SectionState extends State<Dinner_Section> {
               ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('My Food Recipes',
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('dinner')),
+                    );
+                  },
+                  child:Text('My Food List',
                     style: generalStyle,
                   ),
                   color: Colors.amber,
@@ -67,16 +82,25 @@ class _Dinner_SectionState extends State<Dinner_Section> {
             children: <Widget>[
               Expanded(
                 child: RaisedButton(
-                  onPressed: (){},
-                  child:Text('Find a Food',
-                    style: generalStyle,
+                  onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchBar('dinner')),
+                    );
+                  },
+                  child:Row(
+
+                    children: [
+                      Text('Find a Food',
+                        style: generalStyle,
+                      ),
+                      Icon(Icons.search)
+                    ],
                   ),
                   color: Colors.amber,
                 ),
               ),
             ],
           ),
-
 
         ],
       ),
