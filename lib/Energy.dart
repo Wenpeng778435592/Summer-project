@@ -61,8 +61,14 @@ class _Report_SectionState extends State<Report_Section> {
     _startDate = DateTime(oneWeekAgo.year, oneWeekAgo.month, oneWeekAgo.day, 0, 0, 0);
 
     var firstFoodEntry = await dbHelper.getFirstFoodEntry(userID);
-    var firstEntryDate = DateTime.parse(firstFoodEntry.date);
-    _firstEntryDate = DateTime(firstEntryDate.year, firstEntryDate.month, firstEntryDate.day, 0, 0, 0);
+
+    if (firstFoodEntry == null) {
+      var firstEntryDate = DateTime.now();
+      _firstEntryDate = DateTime(firstEntryDate.year, firstEntryDate.month, firstEntryDate.day, 0, 0, 0);
+    } else {
+      var firstEntryDate = DateTime.parse(firstFoodEntry.date);
+      _firstEntryDate = DateTime(firstEntryDate.year, firstEntryDate.month, firstEntryDate.day, 0, 0, 0);
+    }
 
     _currentWeekFoodEntries = await _getFoodEntriesForWeek(sp.getInt("currentUserID"));
 

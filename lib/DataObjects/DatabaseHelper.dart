@@ -165,6 +165,9 @@ class DatabaseHelper {
 
     List<Map> result = await db.query(_foodHistoryTable, orderBy: "date ASC", limit: 1);
 
+    if (result.isEmpty) {
+      return null;
+    }
     return FoodEntry.fromMap(result.first);
   }
 
@@ -190,6 +193,10 @@ class DatabaseHelper {
     Database db = await this.database;
 
     List<Map> queryResults = await db.query(_weightHistoryTable, where: '$_userIDCol = ?', whereArgs: [id]);
+
+    if (queryResults.isEmpty) {
+      return [];
+    }
 
     List<WeightEntry> weightEntries = new List();
     queryResults.forEach((result) {
