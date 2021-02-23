@@ -7,8 +7,9 @@ import 'package:my_diet_diary/Search/Add_Item.dart';
 import 'package:my_diet_diary/qr_view/BarcodeScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:my_diet_diary/Search/SearchPage.dart';
+import 'package:my_diet_diary/Search/MyFoodSearchPage.dart';
+import 'package:my_diet_diary/Search/Add_Food.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'DataObjects/FoodEntry.dart';
 import 'package:intl/intl.dart';
 
@@ -107,9 +108,14 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               ),
               Expanded(
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('breakfast')),
+                    );
+                  },
                   child: Text(
-                    'My Food Recipes',
+                    'My Food List',
                     style: generalStyle,
                   ),
                   color: Colors.amber,
@@ -137,6 +143,25 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                       ),
                       Icon(Icons.search)
                     ],
+                  ),
+                  color: Colors.amber,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Add_Food()),
+                    );
+                  },
+                  child: Text(
+                    'New Food',
+                    style: generalStyle,
                   ),
                   color: Colors.amber,
                 ),

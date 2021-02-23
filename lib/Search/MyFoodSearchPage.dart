@@ -4,16 +4,16 @@ import 'package:my_diet_diary/AlgoliaApplication.dart';
 import 'package:flutter/material.dart';
 import 'package:my_diet_diary/Search/Add_Item.dart';
 
-class SearchBar extends StatefulWidget {
+class MyFoodSearchBar extends StatefulWidget {
   final String meal;
-  SearchBar(this.meal, {Key key}) : super(key: key);
+  MyFoodSearchBar(this.meal, {Key key}) : super(key: key);
 
   @override
-  _SearchBarState createState() => _SearchBarState();
+  _MyFoodSearchBarState createState() => _MyFoodSearchBarState();
 
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _MyFoodSearchBarState extends State<MyFoodSearchBar> {
 
   static const TextStyle generalStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -57,10 +57,10 @@ class _SearchBarState extends State<SearchBar> {
         ),
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children:<Widget>[
                 Text('Search',
-                style: generalStyle,),
+                  style: generalStyle,),
                 TextField(
                     onChanged: (val) {
                       setState(() {
@@ -138,14 +138,13 @@ class DisplaySearchResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
             GestureDetector(
-              onTap: (){
-                print(this.meal);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.meal, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
-              },
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddItem_Section(this.meal, this.short_names, this.carbohydrate, this.energy, this.fat, this.id,  this.protein, this.serv)));
+                },
                 child: Text(short_names ?? "", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)),
             Divider(color: Colors.black,),
             SizedBox(height: 20)
