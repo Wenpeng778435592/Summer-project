@@ -123,68 +123,83 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                 break;
               default:
                 return SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Column(
                     children: <Widget>[
-                      CalorieProgressBar(
-                          breakfastFoods: _breakfastToday,
-                          lunchFoods: _lunchToday,
-                          dinnerFoods: _dinnerToday,
-                          snackFoods: _snackToday,
-                          caloriesToday: _totalCalories,
-                          targetCalories: _targetCalories),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          RichText(
-                              text: new TextSpan(
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-                                  children: <TextSpan>[
-                                new TextSpan(text: _totalProtein.toInt().toString() + "g"),
-                                new TextSpan(text: " Protein", style: TextStyle(fontWeight: FontWeight.normal)),
-                              ])),
-                          RichText(
-                              text: new TextSpan(
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-                                  children: <TextSpan>[
-                                new TextSpan(text: _totalCarbs.toInt().toString() + "g"),
-                                new TextSpan(text: " Carbs", style: TextStyle(fontWeight: FontWeight.normal))
-                              ])),
-                          RichText(
-                              text: new TextSpan(
-                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[700]),
-                                  children: <TextSpan>[
-                                new TextSpan(text: _totalFat.toInt().toString() + "g"),
-                                new TextSpan(text: " Fat", style: TextStyle(fontWeight: FontWeight.normal))
-                              ]))
-                        ],
-                      ),
-                      SizedBox(height: 40),
                       Card(
+                        elevation: 0.25,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 35, 0, 35),
+                          child: Column(children: [
+                            CalorieProgressBar(
+                                breakfastFoods: _breakfastToday,
+                                lunchFoods: _lunchToday,
+                                dinnerFoods: _dinnerToday,
+                                snackFoods: _snackToday,
+                                caloriesToday: _totalCalories,
+                                targetCalories: _targetCalories),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Text(_totalProtein.toInt().toString() + "g",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold, color: Colors.grey[700], fontSize: 18)),
+                                  Text(" Protein",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal, color: Colors.grey[700], fontSize: 16))
+                                ]),
+                                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Text(_totalCarbs.toInt().toString() + "g",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold, color: Colors.grey[700], fontSize: 18)),
+                                  Text(" Carbs",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal, color: Colors.grey[700], fontSize: 16))
+                                ]),
+                                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Text(_totalFat.toInt().toString() + "g",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold, color: Colors.grey[700], fontSize: 18)),
+                                  Text(" Fat",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal, color: Colors.grey[700], fontSize: 16))
+                                ])
+                              ],
+                            ),
+                          ]),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Card(
+                          elevation: 0.25,
                           child: CustomExpansionTile(
                               headerText: "Breakfast",
                               color: Colors.red[300],
                               meals: _breakfastToday,
                               nextPage: Breakfast_Section())),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Card(
+                          elevation: 0.25,
                           child: CustomExpansionTile(
                               headerText: "Lunch", color: Colors.amber, meals: _lunchToday, nextPage: Lunch_Section())),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Card(
+                          elevation: 0.25,
                           child: CustomExpansionTile(
                               headerText: "Dinner",
                               color: Colors.blue[300],
                               meals: _dinnerToday,
                               nextPage: Dinner_Section())),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Card(
+                          elevation: 0.25,
                           child: CustomExpansionTile(
                               headerText: "Snack",
                               color: Colors.green[300],
                               meals: _snackToday,
                               nextPage: Snack_Section())),
-                      SizedBox(height: 10)
+                      SizedBox(height: 5)
                     ],
                   ),
                 );

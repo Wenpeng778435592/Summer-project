@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_diet_diary/Diary/Diary.dart';
+import 'package:my_diet_diary/DiaryPage/Diary.dart';
 import 'package:my_diet_diary/Energy.dart';
 import 'package:my_diet_diary/More.dart';
 import 'package:my_diet_diary/QuickAdd.dart';
@@ -32,7 +32,8 @@ Future<void> main() async {
 //  FoodEntry foodEntry1 = new FoodEntry(userID, 3, 9, 20, 100, "Bacon", "breakfast", DateTime.now().toString(), 10);
 //  FoodEntry foodEntry2 = new FoodEntry(userID, 15, 8, 20, 45, "Cheese", "lunch", DateTime.now().toString(), 10);
 //  FoodEntry foodEntry3 = new FoodEntry(userID, 15, 40, 35, 310, "banana", "lunch", DateTime.now().toString(), 10);
-//  FoodEntry foodEntry4 = new FoodEntry(userID, 50, 300, 150, 400, "pancakes", "breakfast", DateTime.now().toString(), 10);
+//  FoodEntry foodEntry4 =
+//      new FoodEntry(userID, 50, 300, 150, 400, "pancakes", "breakfast", DateTime.now().toString(), 10);
 //  FoodEntry foodEntry4 = new FoodEntry(
 //      userID, 400, 70, 200, 670, "cheeseburger", "dinner", DateTime.now().subtract(Duration(days: 3)).toString(), 10);
 //  FoodEntry foodEntry5 = new FoodEntry(
