@@ -1,15 +1,16 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
+import 'package:my_diet_diary/DataObjects/FoodEntry.dart';
+import 'package:my_diet_diary/DataObjects/Meal.dart';
 import 'package:my_diet_diary/Diary-Breakfast.dart';
 import 'package:my_diet_diary/Diary-Dinner.dart';
 import 'package:my_diet_diary/Diary-Lunch.dart';
 import 'package:my_diet_diary/Diary-Snack.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'DataObjects/DatabaseHelper.dart';
-import 'DataObjects/FoodEntry.dart';
-import 'DataObjects/Meal.dart';
+import 'CustomExpansionTile.dart';
 
 class Dairy_Section extends StatefulWidget {
   @override
@@ -93,94 +94,6 @@ class _Dairy_SectionState extends State<Dairy_Section> {
     });
   }
 
-  List<Column> _getListTiles(List<FoodEntry> foodEntry) {
-    var boldStyle = TextStyle(fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.bold);
-    var normalStyle = TextStyle(fontSize: 18, color: Colors.grey[600]);
-
-    var boldSubtitleStyle = TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.bold);
-    var normalSubtitleStyle = TextStyle(fontSize: 14, color: Colors.grey[600]);
-
-    return foodEntry.map<Column>((FoodEntry foodEntry) {
-      return Column(
-        children: [
-          Divider(),
-          ListTile(
-              title: RichText(
-                  text: new TextSpan(style: normalStyle, children: <TextSpan>[
-                new TextSpan(
-                  text: foodEntry.name,
-                  style: boldStyle,
-                ),
-                new TextSpan(text: " " + foodEntry.amount.toString(), style: normalStyle),
-              ])),
-              subtitle: Padding(
-                padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: RichText(
-                          text: new TextSpan(style: normalSubtitleStyle, children: <TextSpan>[
-                        new TextSpan(text: foodEntry.calories.toInt().toString(), style: boldSubtitleStyle),
-                        new TextSpan(text: " kcal")
-                      ])),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RichText(
-                          text: new TextSpan(style: normalSubtitleStyle, children: <TextSpan>[
-                        new TextSpan(text: foodEntry.protein.toInt().toString() + "g", style: boldSubtitleStyle),
-                        new TextSpan(text: " prot.")
-                      ])),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RichText(
-                          text: new TextSpan(style: normalSubtitleStyle, children: <TextSpan>[
-                        new TextSpan(text: foodEntry.carbs.toInt().toString() + "g", style: boldSubtitleStyle),
-                        new TextSpan(text: " carbs")
-                      ])),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RichText(
-                          text: new TextSpan(style: normalSubtitleStyle, children: <TextSpan>[
-                        new TextSpan(text: foodEntry.calories.toInt().toString() + "g", style: boldSubtitleStyle),
-                        new TextSpan(text: " fat")
-                      ])),
-                    ),
-                  ],
-                ),
-              )),
-        ],
-      );
-    }).toList();
-  }
-
-  _getDaySummaryText(List<FoodEntry> mealEntries) {
-    var boldStyle = TextStyle(fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.bold);
-    var normalStyle = TextStyle(fontSize: 18, color: Colors.grey[600]);
-
-    double calories = 0;
-    double protein = 0;
-
-    mealEntries.forEach((FoodEntry foodEntry) {
-      calories += foodEntry.calories;
-      protein += foodEntry.protein;
-    });
-
-    return RichText(
-        text: new TextSpan(style: normalStyle, children: <TextSpan>[
-      new TextSpan(
-        text: calories.toInt().toString(),
-        style: boldStyle,
-      ),
-      new TextSpan(text: " kcal  "),
-      new TextSpan(text: protein.toStringAsFixed(1) + "g", style: boldStyle),
-      new TextSpan(text: " Protein")
-    ]));
-  }
-
   Widget _getCalorieDifferenceText() {
     var color;
     var text;
@@ -248,7 +161,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                                 painter: ProgressArc(null, null, Colors.grey[300]),
                               ),
                               CustomPaint(
-                                size: Size(280, 130),
+                                size: Size(300, 150),
                                 painter: ProgressArc(
                                     _getCaloriesForMeal(_breakfastToday) +
                                         _getCaloriesForMeal(_lunchToday) +
@@ -258,7 +171,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                                     Colors.green[300]),
                               ),
                               CustomPaint(
-                                size: Size(280, 130),
+                                size: Size(300, 150),
                                 painter: ProgressArc(
                                     _getCaloriesForMeal(_breakfastToday) +
                                         _getCaloriesForMeal(_lunchToday) +
@@ -267,14 +180,14 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                                     Colors.blue[300]),
                               ),
                               CustomPaint(
-                                size: Size(280, 130),
+                                size: Size(300, 150),
                                 painter: ProgressArc(
                                     _getCaloriesForMeal(_breakfastToday) + _getCaloriesForMeal(_lunchToday),
                                     _targetCalories,
                                     Colors.yellow[300]),
                               ),
                               CustomPaint(
-                                size: Size(280, 130),
+                                size: Size(300, 150),
                                 painter:
                                     ProgressArc(_getCaloriesForMeal(_breakfastToday), _targetCalories, Colors.red[300]),
                               ),
@@ -332,80 +245,30 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                       ),
                       SizedBox(height: 40),
                       Card(
-                          child: ExpansionTile(
-                              tilePadding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                              leading: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Breakfast_Section()),
-                                  );
-                                },
-                                icon: Icon(Icons.add, color: Colors.amber, size: 30),
-                              ),
-                              title: Text("Breakfast", style: generalStyle),
-                              subtitle: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0), child: _getDaySummaryText(_breakfastToday)),
-                              children: _getListTiles(_breakfastToday))),
+                          child: CustomExpansionTile(
+                              headerText: "Breakfast",
+                              color: Colors.red[300],
+                              meals: _breakfastToday,
+                              nextPage: Breakfast_Section())),
                       SizedBox(height: 10),
                       Card(
-                          child: ExpansionTile(
-                              tilePadding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                              leading: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Lunch_Section()),
-                                  );
-                                },
-                                icon: Icon(Icons.add, color: Colors.amber, size: 30),
-                              ),
-                              title: Text("Lunch", style: generalStyle),
-                              subtitle: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0), child: _getDaySummaryText(_lunchToday)),
-                              children: _getListTiles(_lunchToday))),
+                          child: CustomExpansionTile(
+                              headerText: "Lunch", color: Colors.amber, meals: _lunchToday, nextPage: Lunch_Section())),
                       SizedBox(height: 10),
                       Card(
-                          child: ExpansionTile(
-                              tilePadding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                              leading: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Dinner_Section()),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Colors.amber,
-                                  size: 30,
-                                ),
-                              ),
-                              title: Text("Dinner", style: generalStyle),
-                              subtitle: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0), child: _getDaySummaryText(_dinnerToday)),
-                              children: _getListTiles(_dinnerToday))),
+                          child: CustomExpansionTile(
+                              headerText: "Dinner",
+                              color: Colors.blue[300],
+                              meals: _dinnerToday,
+                              nextPage: Dinner_Section())),
                       SizedBox(height: 10),
                       Card(
-                          child: ExpansionTile(
-                              tilePadding: EdgeInsets.fromLTRB(10, 10, 15, 10),
-                              leading: IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Snack_Section()),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Colors.amber,
-                                  size: 30,
-                                ),
-                              ),
-                              title: Text("Snack", style: generalStyle),
-                              subtitle: Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0), child: _getDaySummaryText(_snackToday)),
-                              children: _getListTiles(_snackToday))),
+                          child: CustomExpansionTile(
+                              headerText: "Snack",
+                              color: Colors.green[300],
+                              meals: _snackToday,
+                              nextPage: Snack_Section())),
+                      SizedBox(height: 10)
                     ],
                   ),
                 );
@@ -435,7 +298,7 @@ class ProgressArc extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Rect.fromLTRB(0, 0, 280, 280);
+    final rect = Rect.fromLTRB(0, 0, 300, 300);
     final startAngle = -(math.pi - 0.2);
     final sweepAngle = (arc == null || arc > math.pi - 0.4) ? math.pi - 0.4 : arc;
     final userCenter = false;
@@ -443,7 +306,7 @@ class ProgressArc extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..color = progressColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
+      ..strokeWidth = 8;
 
     canvas.drawArc(rect, startAngle, sweepAngle, userCenter, paint);
   }
@@ -453,6 +316,4 @@ class ProgressArc extends CustomPainter {
     // TODO: implement shouldRepaint
     return true;
   }
-
-
 }
