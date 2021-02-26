@@ -43,7 +43,6 @@ dependencies:
   fl_chart: ^0.12.2
   algolia: ^0.1.6+1
   intl: ^0.16.1
-  syncfusion_flutter_gauges: ^18.4.44
 
 dev_dependencies:
   test: ^1.5.1
