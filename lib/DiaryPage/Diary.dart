@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import 'package:my_diet_diary/DataObjects/FoodEntry.dart';
 import 'package:my_diet_diary/DataObjects/Meal.dart';
@@ -23,17 +24,19 @@ class _Dairy_SectionState extends State<Dairy_Section> {
 
   DatabaseHelper dbHelper = new DatabaseHelper();
 
-  List<FoodEntry> _breakfastToday;
-  List<FoodEntry> _lunchToday;
-  List<FoodEntry> _dinnerToday;
-  List<FoodEntry> _snackToday;
+  List<FoodEntry> _breakfastToday = [];
+  List<FoodEntry> _lunchToday = [];
+  List<FoodEntry> _dinnerToday = [];
+  List<FoodEntry> _snackToday = [];
 
-  double _totalCalories;
-  double _totalCarbs;
-  double _totalProtein;
-  double _totalFat;
+  double _totalCalories = 0;
+  double _totalCarbs = 0;
+  double _totalProtein = 0;
+  double _totalFat = 0;
+  double _targetCalories = 0;
 
-  double _targetCalories;
+  DateTime _selectedDate = DateTime.now();
+  DateTime _firstEntryDate;
 
   @override
   void initState() {
@@ -46,16 +49,23 @@ class _Dairy_SectionState extends State<Dairy_Section> {
     int currentUserID = sp.getInt("currentUserID");
 
     var now = DateTime.now();
-    var today = DateTime(now.year, now.month, now.day);
+    _selectedDate = DateTime(now.year, now.month, now.day, 0, 0, 0);
 
-    _breakfastToday = await dbHelper.getMealForDay(today, Meal.breakfast);
-    _lunchToday = await dbHelper.getMealForDay(today, Meal.lunch);
-    _dinnerToday = await dbHelper.getMealForDay(today, Meal.dinner);
-    _snackToday = await dbHelper.getMealForDay(today, Meal.snack);
+    var firstFoodEntry = await dbHelper.getFirstFoodEntry(currentUserID);
 
-    _getDayTotals();
+    if (firstFoodEntry == null) {
+      _firstEntryDate = _selectedDate;
+    } else {
+      var firstEntryDate = DateTime.parse(firstFoodEntry.date);
+      _firstEntryDate = DateTime(firstEntryDate.year, firstEntryDate.month, firstEntryDate.day, 0, 0, 0);
+    }
+
     var currentUser = await dbHelper.getUserByID(currentUserID);
     _targetCalories = currentUser.dailyIntake;
+
+    _updateInformationForDay(_selectedDate);
+
+    setState(() {});
   }
 
   _getDayTotals() {
@@ -93,24 +103,55 @@ class _Dairy_SectionState extends State<Dairy_Section> {
     });
   }
 
+  _updateInformationForDay(DateTime day) async {
+    _selectedDate = day;
+
+    _breakfastToday = await dbHelper.getMealForDay(day, Meal.breakfast);
+    _lunchToday = await dbHelper.getMealForDay(day, Meal.lunch);
+    _dinnerToday = await dbHelper.getMealForDay(day, Meal.dinner);
+    _snackToday = await dbHelper.getMealForDay(day, Meal.snack);
+
+    _getDayTotals();
+
+    setState(() {});
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: _firstEntryDate,
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != _selectedDate) {
+      _updateInformationForDay(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            Container(width: 26, height: 26),
             Text(
-              'Today',
+              'My Diary',
               style: generalStyle,
             ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.play_arrow),
-            ),
+            SizedBox(
+              height: 26.0,
+              width: 26.0,
+              child: IconButton(
+                padding: new EdgeInsets.all(0.0),
+                iconSize: 26,
+                icon: Icon(Icons.calendar_today_rounded),
+                onPressed: () => _selectDate(context),
+              ),
+            )
           ],
         ),
-        centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
       body: FutureBuilder(
@@ -129,8 +170,42 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                       Card(
                         elevation: 0.25,
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 35, 0, 35),
+                          padding: EdgeInsets.fromLTRB(0, 25, 0, 35),
                           child: Column(children: [
+                            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                              IconButton(
+                                  onPressed: _selectedDate.isBefore(_firstEntryDate)
+                                      ? null
+                                      : () {
+                                          _updateInformationForDay(_selectedDate.subtract(Duration(days: 1)));
+                                        },
+                                  icon: Icon(Icons.arrow_back_ios_rounded),
+                                  color: _selectedDate.isBefore(_firstEntryDate) ? Colors.grey : Colors.amber),
+                              RichText(
+                                  text: new TextSpan(
+                                      style:
+                                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[800]),
+                                      children: <TextSpan>[
+                                    new TextSpan(
+                                        text: DateFormat('EEEE').format(_selectedDate),
+                                        style: TextStyle(fontWeight: FontWeight.bold)),
+                                    new TextSpan(
+                                        text: " " + DateFormat('MMMM d').format(_selectedDate),
+                                        style: TextStyle(fontWeight: FontWeight.normal)),
+                                  ])),
+                              IconButton(
+                                onPressed: _selectedDate.isAfter(DateTime.now().subtract(Duration(days: 1)))
+                                    ? null
+                                    : () {
+                                        _updateInformationForDay(_selectedDate.add(Duration(days: 1)));
+                                      },
+                                icon: Icon(Icons.arrow_forward_ios_rounded),
+                                color: _selectedDate.isAfter(DateTime.now().subtract(Duration(days: 1)))
+                                    ? Colors.grey
+                                    : Colors.amber,
+                              ),
+                            ]),
+                            SizedBox(height: 30),
                             CalorieProgressBar(
                                 breakfastFoods: _breakfastToday,
                                 lunchFoods: _lunchToday,
@@ -170,7 +245,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
                           ]),
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 10),
                       Card(
                           elevation: 0.25,
                           child: CustomExpansionTile(
