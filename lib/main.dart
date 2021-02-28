@@ -30,8 +30,8 @@ Future<void> main() async {
   WeightEntry entry3 = new WeightEntry(userID, 58.3, DateTime(2021, 1, 18));
 
 //  FoodEntry foodEntry1 = new FoodEntry(userID, 3, 9, 20, 100, "Bacon", "breakfast", DateTime.now().toString(), 10);
-//  FoodEntry foodEntry2 = new FoodEntry(userID, 15, 8, 20, 45, "Cheese", "lunch", DateTime.now().toString(), 10);
-//  FoodEntry foodEntry3 = new FoodEntry(userID, 15, 40, 35, 310, "banana", "lunch", DateTime.now().toString(), 10);
+//  FoodEntry foodEntry2 = new FoodEntry(userID, 15, 8, 20, 45, "Cheese", "dinner", DateTime.now().toString(), 10);
+//  FoodEntry foodEntry3 = new FoodEntry(userID, 15, 40, 35, 310, "banana", "snack", DateTime.now().toString(), 10);
 //  FoodEntry foodEntry4 =
 //      new FoodEntry(userID, 50, 300, 150, 400, "pancakes", "breakfast", DateTime.now().toString(), 10);
 //  FoodEntry foodEntry4 = new FoodEntry(
