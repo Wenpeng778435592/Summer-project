@@ -17,8 +17,10 @@ class Report_Section extends StatefulWidget {
 }
 
 class _Report_SectionState extends State<Report_Section> {
-  static const TextStyle boldStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-  static const TextStyle normalStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
+  static TextStyle generalStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white);
+  static TextStyle titleStyle = TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.bold);
+  static TextStyle subTextStyle = TextStyle(fontSize: 18, color: Colors.grey[700]);
+  static TextStyle subTextBoldStyle = TextStyle(fontSize: 18, color: Colors.grey[700], fontWeight: FontWeight.w500);
 
   final Duration animDuration = const Duration(milliseconds: 250);
 
@@ -33,7 +35,7 @@ class _Report_SectionState extends State<Report_Section> {
   //End day of the current viewable week
   DateTime _endDate;
 
-  double _caloriesToday;
+  double _caloriesThisWeek;
 
   int touchedIndex;
 
@@ -72,7 +74,7 @@ class _Report_SectionState extends State<Report_Section> {
 
     _currentWeekFoodEntries = await _getFoodEntriesForWeek(sp.getInt("currentUserID"));
 
-    _caloriesToday = _getCaloriesForDay();
+    _caloriesThisWeek = _getCaloriesForWeek();
 
     return dbHelper.getUserByID(userID);
   }
@@ -91,17 +93,11 @@ class _Report_SectionState extends State<Report_Section> {
     return dates.length != 0 ? (totalCalories / dates.length).toInt() : 0;
   }
 
-  double _getCaloriesForDay() {
+  double _getCaloriesForWeek() {
     double totalCalories = 0;
 
-    String today = DateTime.now().toString().split(" ")[0];
-
     _currentWeekFoodEntries.forEach((foodEntry) {
-      String foodEntryDate = foodEntry.date.toString().split(" ")[0];
-
-      if (foodEntryDate == today) {
-        totalCalories = totalCalories + foodEntry.calories;
-      }
+      totalCalories = totalCalories + foodEntry.calories;
     });
 
     return totalCalories;
@@ -147,7 +143,7 @@ class _Report_SectionState extends State<Report_Section> {
     } else if (_startDate.isAfter(DateTime.now().subtract(Duration(days: 14)))) {
       return "Last Week";
     } else {
-      return DateFormat('MMM d').format(_startDate) + " - " + DateFormat('MMM d').format(_endDate);
+      return DateFormat('EEE MMM d').format(_startDate) + " - " + DateFormat('MMM d').format(_endDate);
     }
   }
 
@@ -284,123 +280,137 @@ class _Report_SectionState extends State<Report_Section> {
       appBar: AppBar(
         title: Text(
           'Energy Chart',
-          style: boldStyle,
+          style: generalStyle,
         ),
         centerTitle: true,
         backgroundColor: Colors.amber[800],
       ),
-      body: SingleChildScrollView(
-        child: FutureBuilder(
-            future: _futures,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
-                  break;
-                default:
-                  User currentUser = snapshot.data;
+      body: FutureBuilder(
+          future: _futures,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+                break;
+              default:
+                User currentUser = snapshot.data;
 
-                  _currentWeekSummaryData = _getCalorieSummaryData();
+                _currentWeekSummaryData = _getCalorieSummaryData();
 
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              IconButton(
-                                onPressed: _startDate.isBefore(_firstEntryDate)
-                                    ? null
-                                    : () => arrowButtonPressed("backward", currentUser.id),
-                                icon: Icon(Icons.arrow_back_ios_rounded),
-                                iconSize: 40,
-                                color: _startDate.isBefore(_firstEntryDate) ? Colors.grey : Colors.amber,
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Card(
+                        elevation: 0.25,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(20, 35, 20, 20),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 24.0,
+                                    width: 24.0,
+                                    child: IconButton(
+                                      padding: new EdgeInsets.all(0.0),
+                                      iconSize: 24,
+                                      icon: Icon(Icons.arrow_back_ios_rounded),
+                                      color: _startDate.isBefore(_firstEntryDate) ? Colors.grey : Colors.amber,
+                                      onPressed: _startDate.isBefore(_firstEntryDate)
+                                          ? null
+                                          : () => arrowButtonPressed("backward", currentUser.id),
+                                    ),
+                                  ),
+                                  Text(
+                                    getDateRangeText(),
+                                    style: titleStyle,
+                                  ),
+                                  SizedBox(
+                                    height: 24.0,
+                                    width: 24.0,
+                                    child: IconButton(
+                                      padding: new EdgeInsets.all(0.0),
+                                      iconSize: 24,
+                                      icon: Icon(Icons.arrow_forward_ios_rounded),
+                                      color: _startDate.isAfter(DateTime.now()) ? Colors.grey : Colors.amber,
+                                      onPressed: _startDate.isAfter(DateTime.now().subtract(Duration(days: 7)))
+                                          ? null
+                                          : () => arrowButtonPressed("forward", currentUser.id),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Container(
-                                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.amber, borderRadius: BorderRadius.all(Radius.circular(15))),
-                                  child: Text(
-                                    getDateRangeText(),
-                                    style: boldStyle,
-                                  )),
-                              IconButton(
-                                onPressed: _startDate.isAfter(DateTime.now().subtract(Duration(days: 7)))
-                                    ? null
-                                    : () => arrowButtonPressed("forward", currentUser.id),
-                                icon: Icon(Icons.arrow_forward_ios_rounded),
-                                iconSize: 40,
-                                color: _startDate.isAfter(DateTime.now()) ? Colors.grey : Colors.amber,
+                                padding: EdgeInsets.fromLTRB(5, 35, 5, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Calories This Week',
+                                      style: subTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  child: Row(children: <Widget>[
+                                    Text(_caloriesThisWeek.toStringAsFixed(0),
+                                        style: TextStyle(
+                                            fontSize: 36, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+                                  ])),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(5, 5, 5, 10),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Text(
+                                        'Daily Average: ',
+                                        style: subTextStyle,
+                                      ),
+                                      Text(
+                                        _getDailyCalorieAverageForWeek().toString(),
+                                        style: subTextBoldStyle,
+                                      ),
+                                    ]),
+                                    Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                      Text(
+                                        'Goal: ',
+                                        style: subTextStyle,
+                                      ),
+                                      Text(
+                                        currentUser.dailyIntake.round().toString(),
+                                        style: subTextBoldStyle,
+                                      ),
+                                    ])
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                'Calories Today',
-                                style: boldStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 8, 0, 10),
-                          child: Row(
-                            children: <Widget>[
-                              Text(
-                                _caloriesToday.toStringAsFixed(0),
-                                style: normalStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                'Daily Average: ',
-                                style: boldStyle,
-                              ),
-                              Text(
-                                _getDailyCalorieAverageForWeek().toString(),
-                                style: normalStyle,
-                              ),
-                              Text(
-                                'Goal: ',
-                                style: boldStyle,
-                              ),
-                              Text(
-                                currentUser.dailyIntake.round().toString(),
-                                style: normalStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                            padding: EdgeInsets.fromLTRB(10, 15, 20, 0),
+                      ),
+                      SizedBox(height: 15),
+                      Card(
+                        elevation: 0.25,
+                        child: Container(
+                            height: 250,
+                            padding: EdgeInsets.fromLTRB(20, 20, 35, 15),
                             width: double.infinity,
                             child: BarChart(BarChartData(
                                 maxY: _getMaxY(),
                                 barGroups: _barGroups(),
                                 titlesData: _titlesData(),
                                 barTouchData: _barTouchData(),
-                                borderData: _borderData())))
-                      ],
-                    ),
-                  );
-              }
-            }),
-      ),
+                                borderData: _borderData()))),
+                      )
+                    ],
+                  ),
+                );
+            }
+          }),
     );
   }
 }
