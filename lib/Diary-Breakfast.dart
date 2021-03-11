@@ -70,7 +70,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 Navigator.pop(context);
               },
             ),
-            Text(widget.title ?? 'Breakfast'),
+            Text(widget.title ?? 'Breakfast', style: generalStyle,),
             IconButton(
               icon: FaIcon(FontAwesomeIcons.barcode),
               onPressed: () async {
@@ -111,7 +111,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('breakfast')),
+                      MaterialPageRoute(builder: (context) => MyFoodSearchPage('breakfast')),
                     );
                   },
                   child: Text(

@@ -72,6 +72,7 @@ class DatabaseHelper {
     Directory directory = await getApplicationDocumentsDirectory();
     String dbPath = directory.path + _dbName;
     var database = await openDatabase(dbPath, version: _dbVersion, onCreate: _createDb);
+    print(dbPath);
 
     return database;
   }

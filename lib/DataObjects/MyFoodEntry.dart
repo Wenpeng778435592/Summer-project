@@ -5,8 +5,12 @@ class MyFoodEntry {
   int userID;
   num protein;
   num calories;
-  num amount;
+  num measure;
   String name;
+
+  MyFoodEntry(this.userID, this.carbs, this.protein, this.fat,
+      this.calories, this.name, this.measure);
+
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -16,7 +20,7 @@ class MyFoodEntry {
       'calories': calories,
       'name': name,
       'id': id,
-      'amount': amount,
+      'measure': measure,
       'userID': userID
     };
     return map;
@@ -30,7 +34,7 @@ class MyFoodEntry {
     fat = map['fat'];
     calories = map['calories'];
     name = map['name'];
-    amount = map['amount'];
+    measure = map['measure'];
   }
 
   @override
