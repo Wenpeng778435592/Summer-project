@@ -13,10 +13,11 @@ class Profile_Section extends StatefulWidget {
 }
 
 class _Profile_SectionState extends State<Profile_Section> {
-  static const TextStyle generalStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+  static const TextStyle generalStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static TextStyle titleStyle = TextStyle(fontSize: 18, color: Colors.grey[700], fontWeight: FontWeight.w600);
-  static TextStyle subTitleStyle = TextStyle(fontSize: 16, color: Colors.grey[600]);
+  static const TextStyle buttonStyle =
+      TextStyle(fontSize: 18, color: Colors.black);
 
   Future userFuture;
 
@@ -36,137 +37,86 @@ class _Profile_SectionState extends State<Profile_Section> {
 
   Widget buildProfile(User user) {
     return SingleChildScrollView(
-      child: ListView(physics: NeverScrollableScrollPhysics(), shrinkWrap: true, children: [
-        SizedBox(height: 30),
-        Card(
-          elevation: 0.25,
-          child: Padding(
-            padding: EdgeInsets.only(left: 25, top: 15, right: 25),
-            child: Column(
-              children: [
-                Text("General Information",
-                    style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w600)),
-                SizedBox(height: 10),
-                ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    leading: const Icon(Icons.today),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Age', style: titleStyle),
-                        Text((user.age).toString(), style: subTitleStyle)
-                      ],
-                    )),
-                Divider(height: 3),
-                ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    leading: const Icon(FontAwesomeIcons.tape),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Height', style: titleStyle),
-                        Text((user.height).toString() + "cm", style: subTitleStyle)
-                      ],
-                    )),
-                Divider(height: 3),
-                ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    leading: const Icon(FontAwesomeIcons.weight),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Weight', style: titleStyle),
-                        Text((user.weight).toString() + "kg", style: subTitleStyle)
-                      ],
-                    )),
-                Divider(height: 3),
-                ListTile(
-                    contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                    leading: const Icon(FontAwesomeIcons.venusMars),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Gender', style: titleStyle),
-                        Text((user.gender).toString(), style: subTitleStyle)
-                      ],
-                    )),
-                Divider(),
-                ListTile(
-                  contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  leading: const Icon(FontAwesomeIcons.chartLine),
-                  title: Text('Activity Level', style: titleStyle),
-                  subtitle: Text(user.activityLevel, style: subTitleStyle),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Card(
-          elevation: 0.25,
-          child: Padding(
-            padding: EdgeInsets.only(left: 25, top: 15, right: 25),
-            child: Column(children: [
-              Text("Goals", style: TextStyle(fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.w600)),
+        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        child: ListView(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text("Profile", style: generalStyle),
+                OutlinedButton(
+                    child: Text("Edit", style: buttonStyle),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GeneralInfo_Section()));
+                    })
+              ]),
+              SizedBox(
+                height: 40,
+              ),
+              Row(children: [Text("General Information", style: buttonStyle)]),
+              Divider(
+                height: 15,
+                thickness: 2,
+              ),
               ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                leading: const Icon(Icons.today),
+                title: const Text('Age'),
+                subtitle: new Text((user.age).toString()),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.tape),
+                title: const Text('Height'),
+                subtitle: new Text((user.height).toString() + " cm"),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.weight),
+                title: const Text('Weight'),
+                subtitle: new Text((user.weight).toString() + " kg"),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.venusMars),
+                title: const Text('Gender'),
+                subtitle: new Text(user.gender),
+              ),
+              ListTile(
+                leading: const Icon(FontAwesomeIcons.chartLine),
+                title: const Text('Activity Level'),
+                subtitle: new Text(user.activityLevel),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(children: [Text("Goals", style: buttonStyle)]),
+              Divider(
+                height: 15,
+                thickness: 2,
+              ),
+              ListTile(
                 leading: const Icon(FontAwesomeIcons.bullseye),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Goal', style: titleStyle),
-                    Text((user.goal).toString(), style: subTitleStyle)
-                  ],
-                ),
+                title: const Text('Goal'),
+                subtitle: new Text((user.goal).toString()),
               ),
-              Divider(height: 3),
               ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                 leading: const Icon(FontAwesomeIcons.utensils),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Calorie Goal', style: titleStyle),
-                    Text((user.dailyIntake).toStringAsFixed(0) + " kcal", style: subTitleStyle)
-                  ],
-                ),
+                title: const Text('Calorie Goal'),
+                subtitle: new Text((user.calorieGoal).toString()),
               ),
-              Divider(height: 3),
               user.targetDays != null
                   ? ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                       leading: const Icon(FontAwesomeIcons.calendarDay),
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Target Days', style: titleStyle),
-                          Text((user.targetDays).toString(), style: subTitleStyle)
-                        ],
-                      ),
+                      title: const Text('Target Days'),
+                      subtitle: new Text((user.targetDays).toString()),
                     )
                   : new Container(width: 0, height: 0),
-              Divider(height: 3),
               ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                 leading: const Icon(FontAwesomeIcons.weight),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Weight Goal', style: titleStyle),
-                    Text((user.targetWeight).toString() + "kg", style: subTitleStyle)
-                  ],
-                ),
+                title: const Text('Weight Goal'),
+                subtitle: new Text((user.targetWeight).toString() + " kg"),
               )
-            ]),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-      ]),
-    );
+            ]));
   }
 
   Widget build(BuildContext context) {
@@ -174,36 +124,17 @@ class _Profile_SectionState extends State<Profile_Section> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            SizedBox(
-              height: 26.0,
-              width: 26.0,
-              child: IconButton(
-                padding: new EdgeInsets.all(0.0),
-                iconSize: 26,
-                icon: Icon(Icons.arrow_back_ios_outlined),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios_outlined),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
             Text(
               'Profile',
               style: generalStyle,
             ),
-            SizedBox(
-              height: 26.0,
-              width: 26.0,
-              child: IconButton(
-                padding: new EdgeInsets.all(0.0),
-                iconSize: 26,
-                icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => GeneralInfo_Section()));
-                },
-              ),
-            )
           ],
         ),
         backgroundColor: Colors.amber[800],
@@ -218,7 +149,8 @@ class _Profile_SectionState extends State<Profile_Section> {
                     return Center(child: CircularProgressIndicator());
                     break;
                   default:
-                    if (snapshot.hasError) return Text("Error " + snapshot.error.toString());
+                    if (snapshot.hasError)
+                      return Text("Error " + snapshot.error.toString());
                     return buildProfile(snapshot.data);
                 }
               })),

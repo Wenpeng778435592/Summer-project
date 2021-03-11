@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../DataObjects/FoodEntry.dart';
+import '../DataObjects/Meal.dart';
 import '../DataObjects/User.dart';
 import '../DataObjects/WeightEntry.dart';
-import 'Meal.dart';
 import 'MyFoodEntry.dart';
 
 class DatabaseHelper {
@@ -122,12 +123,14 @@ class DatabaseHelper {
   }
 
   //Returns entries matching the specified meal type for the day
-  Future<List<FoodEntry>> getMealForDay(DateTime date, Meal meal) async {
+  Future<List<FoodEntry>> getMealForDay(DateTime date, Meal mealType) async {
     Database db = await this.database;
     String day = date.toString().split(" ")[0];
 
-    List<Map> queryResults = await db
-        .query(_foodHistoryTable, where: '$_dateCol LIKE ? AND $_mealCol = ?', whereArgs: ['%$day%', meal.value]);
+    String meal = mealType.value;
+
+    List<Map> queryResults =
+        await db.query(_foodHistoryTable, where: '$_dateCol LIKE ? AND $_mealCol = ?', whereArgs: ['%$day%', meal]);
 
     return _convertToFoodObjectList(queryResults);
   }
@@ -156,20 +159,10 @@ class DatabaseHelper {
     Database db = await this.database;
 
     List<Map> result = await db.query(_foodHistoryTable,
-        where: '$_dateCol BETWEEN ? AND ?', whereArgs: [startDate.toString(), endDate.toString()]);
+        where: '$_dateCol BETWEEN ? AND ?',
+        whereArgs: [new DateFormat('yyyy-MM-dd').format(startDate), new DateFormat('yyyy-MM-dd').format(endDate)]);
 
     return _convertToFoodObjectList(result);
-  }
-
-  Future<FoodEntry> getFirstFoodEntry(int userID) async {
-    Database db = await this.database;
-
-    List<Map> result = await db.query(_foodHistoryTable, orderBy: "date ASC", limit: 1);
-
-    if (result.isEmpty) {
-      return null;
-    }
-    return FoodEntry.fromMap(result.first);
   }
 
   //Private function used by helper functions to convert a query result into
@@ -194,10 +187,6 @@ class DatabaseHelper {
     Database db = await this.database;
 
     List<Map> queryResults = await db.query(_weightHistoryTable, where: '$_userIDCol = ?', whereArgs: [id]);
-
-    if (queryResults.isEmpty) {
-      return [];
-    }
 
     List<WeightEntry> weightEntries = new List();
     queryResults.forEach((result) {
