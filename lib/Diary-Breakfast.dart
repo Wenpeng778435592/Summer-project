@@ -77,7 +77,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               widget.title ?? 'Breakfast',
               style: generalStyle,
             ),
-            IconButton(
+
               icon: FaIcon(FontAwesomeIcons.barcode),
               onPressed: () async {
                 PermissionStatus _hasPermission =
