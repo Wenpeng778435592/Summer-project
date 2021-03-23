@@ -35,7 +35,7 @@ class _AddItem_SectionState extends State<AddItem_Section> {
   static const TextStyle generalStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const TextStyle labelStyle =
-  TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
@@ -173,25 +173,14 @@ class _AddItem_SectionState extends State<AddItem_Section> {
                         children: [
                           TableRow(
                             children: [
-                              Column(children: [Text('Energy', style: labelStyle,)],),
-                              Column(children: [Text('Carb', style: labelStyle,)],),
-                              Column(children: [Text('Fat', style: labelStyle,)],),
-                              Column(children: [Text('Protein', style: labelStyle,)],),
+                              Column(children: [Text('Energy(Cal)', style: labelStyle,)],),
+                              Column(children: [Text('Protein(g)', style: labelStyle,)],),
                             ],
                           ),
                           TableRow(
                             children: [
                               Column(children: [Text(
-                                ((num.parse(widget.energy) * amountFood).toStringAsFixed(1)).toString(),
-                                style: generalStyle,
-                              )],),
-                              Column(children: [Text(
-                                ((num.parse(widget.carbohydrate) * amountFood).toStringAsFixed(1)).toString(),
-                                style: generalStyle,
-                              )],),
-                              Column(children: [
-                                Text(
-                                ((num.parse(widget.fat) * amountFood).toStringAsFixed(1)).toString(),
+                                ((num.parse(widget.energy) * amountFood / 4.184).toStringAsFixed(1)).toString(),
                                 style: generalStyle,
                               )],),
                               Column(children: [Text(
@@ -199,6 +188,25 @@ class _AddItem_SectionState extends State<AddItem_Section> {
                                 style: generalStyle,
                               )],),
 
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              Column(children: [Text('Carb(g)', style: labelStyle,)],),
+                              Column(children: [Text('Fat(g)', style: labelStyle,)],),
+                            ],
+                          ),
+                          TableRow(
+                            children: [
+                              Column(children: [Text(
+                                ((num.parse(widget.carbohydrate) * amountFood).toStringAsFixed(1)).toString(),
+                                style: generalStyle,
+                              )],),
+                              Column(children: [
+                                Text(
+                                  ((num.parse(widget.fat) * amountFood).toStringAsFixed(1)).toString(),
+                                  style: generalStyle,
+                                )],),
                             ],
                           ),
                         ],
@@ -237,7 +245,9 @@ class _AddItem_SectionState extends State<AddItem_Section> {
                       print(DateTime.now().toString());
                       print(this.amountFood*100);
 
-                      _foodEntry = new FoodEntry(currentUserID, num.parse(widget.carbohydrate) * amountFood, num.parse(widget.protein) * amountFood, num.parse(widget.fat) * amountFood, num.parse(widget.energy) * amountFood, widget.short_names, widget.meal, DateTime.now().toString(), this.amountFood*100);
+                      _foodEntry = new FoodEntry(currentUserID, num.parse(widget.carbohydrate) * amountFood, num.parse(widget.protein) * amountFood,
+                          num.parse(widget.fat) * amountFood, num.parse(widget.energy) * amountFood, widget.short_names, widget.meal,
+                          DateTime.now().toString(), this.amountFood*100);
                       dbHelper.addFoodEntry(_foodEntry);
                       print('FoodEntry working');
                     }
