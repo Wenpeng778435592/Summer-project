@@ -78,10 +78,11 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
               style: generalStyle,
             ),
 
+            IconButton(
               icon: FaIcon(FontAwesomeIcons.barcode),
               onPressed: () async {
                 PermissionStatus _hasPermission =
-                    await Permission.camera.request();
+                await Permission.camera.request();
                 if (!_hasPermission.isGranted) return;
                 Navigator.push(
                   context,
