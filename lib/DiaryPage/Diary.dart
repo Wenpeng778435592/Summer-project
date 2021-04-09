@@ -41,6 +41,7 @@ class _Dairy_SectionState extends State<Dairy_Section> {
   @override
   void initState() {
     super.initState();
+    print("initialising...\n");
     _futures = _getFutures();
   }
 

@@ -67,7 +67,7 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
             IconButton(
               icon: Icon(Icons.arrow_back_ios_outlined),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
             ),
             Text(widget.title ?? 'Breakfast'),
