@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 
 
+
+
+
 class MyFoodSearchPage extends StatefulWidget {
 
 
@@ -40,12 +43,22 @@ class _MyFoodSearchPageState extends State<MyFoodSearchPage> {
               child: Text('My Food Search',
                 style: generalStyle,),
             ),
+            Positioned(
+              right: 0,
+              child: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: (){
+                  showSearch(context: context, delegate: MyFoodSearchPageTest());
+                },
+              ),
+            ),
           ],
         ),
         backgroundColor: Colors.amber[800],
       ),
 
-      body: FutureBuilder<List>(
+      body:
+      FutureBuilder<List>(
         future: dbhelper.getMyFoods(),
         initialData: List(),
         builder: (context, snapshot){
@@ -56,7 +69,7 @@ class _MyFoodSearchPageState extends State<MyFoodSearchPage> {
               final item = snapshot.data[position];
               return Card(
                 child: ListTile(
-                  title: Text("Food Name " + snapshot.data[position].name),
+                  title: Text(snapshot.data[position].name),
                 ),
               );
 
@@ -70,6 +83,73 @@ class _MyFoodSearchPageState extends State<MyFoodSearchPage> {
       ),
 
 
+    );
+  }
+}
+
+
+
+class MyFoodSearchPageTest extends SearchDelegate {
+
+  DatabaseHelper dbhelper = new DatabaseHelper();
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    //actions of appbar
+    return[
+    IconButton(
+      icon: Icon(Icons.clear),
+      onPressed: (){
+        query = '';
+      },
+    ),
+
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    //leading part of appbar
+    return IconButton(
+      icon: Icon(Icons.arrow_back_ios_outlined),
+      onPressed: (){
+        close(context, null);
+      },
+    );
+
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    //show result based on the selection
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    //show when someone searches for something
+    return FutureBuilder<List>(
+      future: dbhelper.getMyFoods(),
+      initialData: List(),
+      builder: (context, snapshot){
+        return snapshot.hasData
+            ? ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (_, int position){
+            final item = snapshot.data[position];
+            return Card(
+              child: ListTile(
+                title: Text(snapshot.data[position].name),
+              ),
+            );
+
+
+          },
+        )
+            : Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
