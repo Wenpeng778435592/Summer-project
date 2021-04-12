@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import 'package:my_diet_diary/DataObjects/FoodEntry.dart';
 
 class CustomExpansionTile extends StatefulWidget {
@@ -16,10 +17,11 @@ class CustomExpansionTile extends StatefulWidget {
 class CustomExpansionTileState extends State<CustomExpansionTile> {
   static TextStyle generalStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.grey[800]);
   bool isExpanded = false;
+  DatabaseHelper dbHelper = new DatabaseHelper();
 
-  _getDaySummaryText(List<FoodEntry> mealEntries) {
-    var boldStyle = TextStyle(fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.bold);
-    var normalStyle = TextStyle(fontSize: 18, color: Colors.grey[600]);
+  RichText _getDaySummaryText(List<FoodEntry> mealEntries) {
+    var boldStyle = TextStyle(fontSize: 16, color: Colors.grey[600], fontWeight: FontWeight.bold);
+    var normalStyle = TextStyle(fontSize: 16, color: Colors.grey[600]);
 
     double calories = 0;
     double protein = 0;
@@ -41,14 +43,14 @@ class CustomExpansionTileState extends State<CustomExpansionTile> {
     ]));
   }
 
-  List<Column> _getListTiles(List<FoodEntry> foodEntry) {
+  List<Column> _getListTiles(List<FoodEntry> foodEntries) {
     var boldStyle = TextStyle(fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.bold);
     var normalStyle = TextStyle(fontSize: 18, color: Colors.grey[600]);
 
     var boldSubtitleStyle = TextStyle(fontSize: 14, color: Colors.grey[600], fontWeight: FontWeight.bold);
     var normalSubtitleStyle = TextStyle(fontSize: 14, color: Colors.grey[600]);
 
-    return foodEntry.map<Column>((FoodEntry foodEntry) {
+    return foodEntries.map<Column>((FoodEntry foodEntry) {
       return Column(
         children: [
           Divider(),
@@ -59,7 +61,7 @@ class CustomExpansionTileState extends State<CustomExpansionTile> {
                   text: foodEntry.name,
                   style: boldStyle,
                 ),
-                new TextSpan(text: " " + foodEntry.amount.toString(), style: normalStyle),
+                new TextSpan(text: "\n" + foodEntry.amount.toString(), style: normalStyle),
               ])),
               subtitle: Padding(
                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
@@ -97,6 +99,26 @@ class CustomExpansionTileState extends State<CustomExpansionTile> {
                         new TextSpan(text: " fat")
                       ])),
                     ),
+                    IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red[700], size: 24),
+                        onPressed: () {
+                          dbHelper.deleteFoodEntry(foodEntry.id);
+                          foodEntries.remove(foodEntry);
+                          setState(() {});
+
+                          final snackBar = SnackBar(
+                              content: Text(foodEntry.name + ' deleted', style: TextStyle(fontStyle: FontStyle.italic)),
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  foodEntries.add(foodEntry);
+                                  dbHelper.addFoodEntry(foodEntry);
+                                  setState(() {});
+                                },
+                              ));
+
+                          Scaffold.of(context).showSnackBar(snackBar);
+                        })
                   ],
                 ),
               )),
