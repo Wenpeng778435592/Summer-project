@@ -67,7 +67,7 @@ class _Lunch_SectionState extends State<Lunch_Section> {
                   onPressed: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('lunch')),
+                      MaterialPageRoute(builder: (context) => MyFoodSearchPage('lunch')),
                     );
                   },
                   child:Text('My Food List',

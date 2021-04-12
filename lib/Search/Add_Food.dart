@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:my_diet_diary/DataObjects/FoodEntry.dart';
+import 'package:my_diet_diary/DataObjects/MyFoodEntry.dart';
 import 'package:my_diet_diary/DataObjects/DatabaseHelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:my_diet_diary/DataObjects/Meal.dart';
+
+
+
+Future userFuture;
+MyFoodEntry _myFoodEntry;
+DatabaseHelper dbHelper = new DatabaseHelper();
+
+
 
 class Add_Food extends StatefulWidget {
   @override
@@ -20,14 +28,37 @@ class _Add_FoodState extends State<Add_Food> {
   num _servingSize = 0;
   num _energy = 0;
   num _protein = 0;
+  num _fat = 0;
+  num _carbohydrate = 0;
+  String _unit = 'Cal';
+  int currentUserID;
 
   @override
 
+  void initState() {
+    super.initState();
+    userFuture = _getUserFuture();
+  }
+
+  _getUserFuture() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    currentUserID = sp.getInt("currentUserID");
+  }
+
+
+  final GlobalKey<FormState> AddFoodNameFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> AddFoodValueFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> OptionalFormKey = GlobalKey<FormState>();
+  List<bool> _selections = List.generate(2, (index) => false);
+
+
+  bool isexpanded  = false;
+
   Widget _buildName() {
     return TextFormField(
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.name,
       decoration: InputDecoration(
-        hintText: 'Enter name of food here',hintStyle: labelStyle,
+        labelText: 'Name',labelStyle: generalStyle,
       ),
       onChanged: (value){
         setState(() {
@@ -45,14 +76,14 @@ class _Add_FoodState extends State<Add_Food> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        hintText: 'Enter size per serve here',hintStyle: labelStyle,
+        labelText: 'Serving Size (g)',labelStyle: generalStyle,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
       onChanged: (value){
         setState(() {
-          _servingSize = int.parse(value);
+          _servingSize = num.parse(value);
         });},
       validator: (value){
         if(value == 0){
@@ -66,18 +97,17 @@ class _Add_FoodState extends State<Add_Food> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        hintText: 'Enter energy per serve here',hintStyle: labelStyle,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
       onChanged: (value){
         setState(() {
-          _energy = int.parse(value);
+          _energy = num.parse(value);
         });},
       validator: (value){
         if(value == 0){
-          return 'Invalid energy number.';
+          return 'Invalid energy input.';
         }
       },
     );
@@ -87,20 +117,62 @@ class _Add_FoodState extends State<Add_Food> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        hintText: 'Enter protein per serve here',hintStyle: labelStyle,
+        labelText: 'Protein (g)',labelStyle: generalStyle,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
       onChanged: (value){
         setState(() {
-          _protein = int.parse(value);
+          _protein = num.parse(value);
         });},
       validator: (value){
         if(value == 0){
-          return 'Invalid protein number.';
+          return 'Invalid protein input.';
         }
       },
+    );
+  }
+
+  Widget _buildFat() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Fat (g)',labelStyle: generalStyle,
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      onChanged: (value){
+        setState(() {
+          _fat = num.parse(value);
+        });},
+      // validator: (value){
+      //   if(value == 0){
+      //     return 'Invalid fat input.';
+      //   }
+      // },
+    );
+  }
+
+  Widget _buildCarbohydrate() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: 'Carbohydrate (g)',labelStyle: generalStyle,
+      ),
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      onChanged: (value){
+        setState(() {
+          _carbohydrate = num.parse(value);
+        });},
+      // validator: (value){
+      //   if(value == 0){
+      //     return 'Invalid carbohydrate input.';
+      //   }
+      // },
     );
   }
 
@@ -134,7 +206,18 @@ class _Add_FoodState extends State<Add_Food> {
                     color: Colors.white,
                       fontSize: 25, fontWeight: FontWeight.bold),),
                 onPressed: (){
-                  Navigator.pop(context);
+                  if(AddFoodNameFormKey.currentState.validate() && AddFoodValueFormKey.currentState.validate()){
+                    print('Nice you made it!');
+                    print('AddFood working');
+                    print(_unit + ' working');
+                    print('UserID');
+                    print(currentUserID);
+                    if(_unit == 'KJ'){ _energy = _energy / 4.184;}
+                    _myFoodEntry = new MyFoodEntry(currentUserID, _carbohydrate, _protein, _fat,
+                        _energy, _foodName, _servingSize);
+                    dbHelper.addMyFood(_myFoodEntry);
+                    print('db working');
+                  }
                 },
               ),
             ),
@@ -144,46 +227,97 @@ class _Add_FoodState extends State<Add_Food> {
       ),
       body: SingleChildScrollView(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('Name',
-                  style: generalStyle,),
-              ),
-              _buildName(),
-              SizedBox(height:10),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('Serving Size',
-                  style: generalStyle,),
-              ),
-              _buildServingSize(),
-              SizedBox(height:20),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('Per serving',
-                  style: generalStyle,),
-              ),
-              SizedBox(height:20),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('Energy',
-                  style: generalStyle,),
-              ),
-              _buildEnergy(),
-              SizedBox(height:10),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('Protein(g)',
-                  style: generalStyle,),
-              ),
-              _buildProtein(),
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Form(
+                key: AddFoodNameFormKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildName(),
+                    _buildServingSize()
+                  ],
+                ),),
+            ),
 
-            ]),
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              alignment: Alignment.topLeft,
+              child: Text('Per Serving',
+                     style: generalStyle,),
+            ),
 
 
-      ),
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              alignment: Alignment.topLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Energy',
+                    style: generalStyle,),
+                  ToggleButtons(
+                      children: [
+                        Text('KJ',
+                          style: labelStyle,
+                        ),
+                        Text('Cal',
+                          style: labelStyle,
+                        ),
+                      ], isSelected: _selections,
+                    onPressed: (int index) {
+
+                      setState(() {
+                        for (int i = 0; i < _selections.length; i++) {
+                          _selections[i] = i == index;
+                        }
+
+                      });
+                      if(index == 0){_unit = 'KJ';}else if(index == 1){_unit = 'Cal';}
+                      print(index);
+                      print(_unit);
+                    },
+                    selectedColor: Colors.amber[800],
+                  )
+                ]
+              ),
+            ),
+
+
+            Container(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+              child: Form(
+                key: AddFoodValueFormKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildEnergy(),
+                    _buildProtein(),
+                  ],
+                ),),
+            ),
+
+            ExpansionTile(
+              title: Text('Optional', style: generalStyle,),
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                  child: Form(
+                    key: OptionalFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        _buildFat(),
+                        _buildCarbohydrate(),
+                      ],
+                    ),),
+                ),
+              ],
+            ),
+
+
+          ],
+        ),
+
+        )
 
     );
   }

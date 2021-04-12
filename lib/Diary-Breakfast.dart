@@ -48,6 +48,9 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
   // controller show menu
   bool showMenu = false;
 
+  //constructs an index for record expansion item
+  List<int> _openedList = List<int>();
+
   @override
   void initState() {
     super.initState();
@@ -70,12 +73,16 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 Navigator.pop(context, true);
               },
             ),
-            Text(widget.title ?? 'Breakfast'),
+            Text(
+              widget.title ?? 'Breakfast',
+              style: generalStyle,
+            ),
+
             IconButton(
               icon: FaIcon(FontAwesomeIcons.barcode),
               onPressed: () async {
                 PermissionStatus _hasPermission =
-                    await Permission.camera.request();
+                await Permission.camera.request();
                 if (!_hasPermission.isGranted) return;
                 Navigator.push(
                   context,
@@ -111,7 +118,8 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MyFoodSearchBar('breakfast')),
+                      MaterialPageRoute(
+                          builder: (context) => MyFoodSearchPage('breakfast')),
                     );
                   },
                   child: Text(
@@ -221,14 +229,20 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                 // String name = this.foods[index % 3];
                 // int num = this.nums[index % 3];
                 FoodEntry foodEntry = foodSource[index];
+                //print('foodEntry name is ${foodEntry.name}');
                 return _listItem(
                   type: foodEntry.meal,
                   date: () {
                     DateTime date = DateTime.tryParse(foodEntry.date);
+                    //
                     if (date != null) {
-                      DateFormat df = DateFormat("yyyy-MM-dd HH:mm:ss");
-                      String v = df.format(date);
-                      return v;
+                      //comment
+                      int week = date.weekday;
+                      List<String> weeks = ['Mon','Tues','Wed','Thur','Fri','Sat','Sun'];
+                      String currentWeek = weeks[week -1];
+                      DateFormat df = DateFormat("yyyy-MM-dd");
+                      String dateStr = df.format(date);
+                      return dateStr + ' ' + currentWeek;
                     } else {
                       return '';
                     }
@@ -248,9 +262,14 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
                           '${foodEntry.protein}',
                           '100', //serv is 100g
                         ),
-
                       ),
                     );
+                  },
+                  isOpen: _openedList.contains(index),
+                  checkShowMore: () {
+                   setState(() {
+                      _openedList.add(index);
+                   });
                   },
                 );
               },
@@ -278,6 +297,8 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
       {@required String type,
       @required String date,
       @required String foodName,
+      @required bool isOpen,
+      Function checkShowMore,
       Function onTap}) {
     return InkWell(
       onTap: onTap,
@@ -305,12 +326,40 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              child: Text(
-                foodName,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black45,
-                ),
+              child: Row(
+                children: () {
+                  List<Widget> widgets = List<Widget>();
+                  widgets.add(
+                    Expanded(
+                      child: Text(
+                        foodName,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black45,
+                      ),
+                        maxLines: isOpen == true ? null :1,
+                        overflow: isOpen == true ? null : TextOverflow.ellipsis,
+                      ),
+                    ),
+                  );
+                  if (isOpen == false) {
+                    widgets.add(
+                      Container(
+                        child: InkWell(
+                          onTap: checkShowMore,
+                          child: Text(
+                            'show more >',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return widgets;
+                }(),
               ),
             ),
           ],
@@ -330,6 +379,9 @@ class _Breakfast_SectionState extends State<Breakfast_Section> {
       List<FoodEntry> temp = await DatabaseHelper().getMealForDay(date, meal);
       allSource.addAll(temp); //Summarize the acquired data
     }
+
+    //clear mark open index
+    _openedList.clear();
 
     setState(() {
       foodSource = allSource;

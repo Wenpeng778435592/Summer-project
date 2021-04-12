@@ -71,6 +71,7 @@ class DatabaseHelper {
     Directory directory = await getApplicationDocumentsDirectory();
     String dbPath = directory.path + _dbName;
     var database = await openDatabase(dbPath, version: _dbVersion, onCreate: _createDb);
+    print(dbPath);
 
     return database;
   }
@@ -280,7 +281,7 @@ class DatabaseHelper {
   Future<List<MyFoodEntry>> getMyFoods() async {
     Database db = await this.database;
 
-    List<Map> queryResults = await db.query('SELECT * FROM $_myFoodTable');
+    List<Map> queryResults = await db.rawQuery('SELECT * FROM $_myFoodTable');
 
     List<MyFoodEntry> myFoodEntries = new List();
     queryResults.forEach((result) {

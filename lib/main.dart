@@ -23,6 +23,7 @@ Future<void> main() async {
 
   DatabaseHelper dbHelper = new DatabaseHelper();
 
+
 //  WeightEntry entry = new WeightEntry(userID, 50.1, DateTime.now());
 //  WeightEntry entry1 = new WeightEntry(userID, 56.5, DateTime(2021, 1, 12));
 //  WeightEntry entry2 = new WeightEntry(userID, 54.7, DateTime(2021, 1, 27));
